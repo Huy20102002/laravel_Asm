@@ -2,15 +2,17 @@
 @section('title', 'Danh sách User')
 @section('title_content', 'Danh Sách User')
 @section('content')
+
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search User....">
-                <div class="input-group-append">
-                    <button class="btn btn-primary">
-                        <i class="fas fa-search fa-sm"></i>
-                    </button>
+        <div class="card-header py-3 d-flex align-items-center justify-content-between">
+            <div>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search User....">
+                    
                 </div>
+            </div>
+            <div>
+                <button class="btn btn-primary">Thêm người dùng</button>
             </div>
         </div>
         <div class="card-body">
@@ -39,7 +41,9 @@
                                 <td class="">
                                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                             class="fas fa-info-circle"></i></button>
-                                    <button class="btn btn-primary"><i class="fas fa-trash-alt"></i></button>
+                                    <button class="btn btn-primary"><i class="fas fa-trash-alt"></i>
+                                 
+                                    </button>
                                 </td>
                             </tr>
                         @endfor
@@ -89,3 +93,5 @@
         </div>
     </div>
 @endsection
+
+    

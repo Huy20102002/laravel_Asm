@@ -67,7 +67,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Danh Sách:</h6>
                         <a class="collapse-item" href="{{route('admin.users.index')}}">Thông tin user</a>
-                        <a class="collapse-item" href="cards.html">Thêm người dùng</a>
+                        <a class="collapse-item" href="{{route('admin.users.create')}}">Thêm người dùng</a>
                     </div>
                 </div>
             </li>
@@ -368,8 +368,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">@yield('title_content')</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                      
                     </div>
 
                     <!-- Content Row -->
