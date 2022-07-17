@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div>
-                <button class="btn btn-primary">Thêm người dùng</button>
+                <a href="{{route('admin.users.create')}}" class="btn btn-primary">Thêm người dùng</a>
             </div>
         </div>
         <div class="card-body">
@@ -30,7 +30,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for ($i = 0; $i < 100; $i++)
+                        @for ($i = 0; $i < 10; $i++)
                             <tr>
                                 <td>{{ $i }}</td>
                                 <td>{{ $i }}</td>
@@ -67,20 +67,20 @@
                                 <input type="text" class="form-control">
                             </div>
                             <div class="mb-3">
-                                <label for="">Tên người dùng</label>
+                                <label for="">Sinh năm</label>
                                 <input type="text" class="form-control">
                             </div>
                             <div class="mb-3">
-                                <label for="">Tên người dùng</label>
-                                <input type="text" class="form-control">
+                                <label for="">Email</label>
+                                <input type="email" class="form-control">
                             </div>
                             <div class="mb-3">
-                                <label for="">Tên người dùng</label>
-                                <input type="text" class="form-control">
+                                <label for="">Phone number</label>
+                                <input type="number" class="form-control">
                             </div>
                             <div class="mb-3">
-                                <label for="">Tên người dùng</label>
-                                <input type="text" class="form-control">
+                                <label for="">Image</label>
+                                <input type="file" class="form-control">
                             </div>
                         </form>
                     </div>
