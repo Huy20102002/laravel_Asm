@@ -23,5 +23,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::prefix('users')->name('users.')->group(function(){
         Route::get('/',[UserController::class,'index'])->name('index');
         Route::get('create',[UserController::class,'create'])->name('create');
+        Route::get('show/{id}',[UserController::class,'show']);
+        Route::delete('delete/{id}',[UserController::class,'destroy'])->name('delete');
     });
 });

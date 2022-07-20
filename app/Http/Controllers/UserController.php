@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -15,8 +16,9 @@ class UserController extends Controller
     public function index()
     {
         // Alert::success('Success Title', 'Success Message');
-
-        return view('admin.users.index');
+        $list_user =  User::select('id','name', 'age', 'email', 'phone', 'image')
+        ->paginate(15);
+        return view('admin.users.index',['data'=>$list_user]);
     }
 
     /**
@@ -48,7 +50,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = User::find($id);
+        return  response()->json(['data'=>$data]);
     }
 
     /**
@@ -82,6 +85,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        alert()->question('Title','Lorem Lorem Lorem');
+        if($id){
+            $user = User::find($id);
+            if($user->delete()){
+                return redirect()->back();
+            }
+        }
     }
 }

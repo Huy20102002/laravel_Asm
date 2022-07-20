@@ -8,11 +8,11 @@
             <div>
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search User....">
-                    
+
                 </div>
             </div>
             <div>
-                <a href="{{route('admin.users.create')}}" class="btn btn-primary">Thêm người dùng</a>
+                <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Thêm người dùng</a>
             </div>
         </div>
         <div class="card-body">
@@ -30,25 +30,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for ($i = 0; $i < 10; $i++)
+                        @foreach ($data as $index => $user)
                             <tr>
-                                <td>{{ $i }}</td>
-                                <td>{{ $i }}</td>
-                                <td>{{ $i }}</td>
-                                <td>{{ $i }}</td>
-                                <td>{{ $i }}</td>
-                                <td>{{ $i }}</td>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->age }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->phone }}</td>
+                                <td>{{ $user->image }}</td>
                                 <td class="">
-                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                            class="fas fa-info-circle"></i></button>
-                                    <button class="btn btn-primary"><i class="fas fa-trash-alt"></i>
-                                 
-                                    </button>
+                                    <div class="d-flex">
+                                        <div class="m-2">
+                                            <button onclick="getId('{{ $user->id }}')" class="btn btn-primary"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                                                    class="fas fa-info-circle"></i></button>
+                                        </div>
+                                        <div class="m-2">
+                                            <form action="{{route('admin.users.delete',$user->id)}}" method="POST">
+                                                @csrf
+                                                @method("DELETE")
+                                                <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
-                        @endfor
+                        @endforeach
                     </tbody>
                 </table>
+                <div>
+                    {{ $data->links() }}
+                </div>
             </div>
         </div>
     </div>
@@ -61,10 +73,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="form">
-                        <form action="">
+                        <form action="" id="formUser">
+
                             <div class="mb-3">
                                 <label for="">Tên người dùng</label>
-                                <input type="text" class="form-control">
+                                <input type="text" value="${data.name}" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label for="">Sinh năm</label>
@@ -82,6 +95,7 @@
                                 <label for="">Image</label>
                                 <input type="file" class="form-control">
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -93,5 +107,42 @@
         </div>
     </div>
 @endsection
+@section('script')
+    <script>
+        function getRequest(url) {
+            return fetch(url, {
+                    method: "GET",
+                    headers: new Headers({
+                        "Content-Type": "application/json"
+                    })
+                })
+                .then(response => response.json());
+        }
+        const getId = async (id) => {
+            const url = `http://localhost:8000/admin/users/show/${id}`;
+            const {data} = await getRequest(url);
+            document.getElementById("formUser").innerHTML = ` <div class="mb-3">
+                                  <label for="">Tên người dùng</label>
+                                  <input type="text" value="${data.name}" class="form-control">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="">Tuổi</label>
+                                  <input type="text" value="${data.age}" class="form-control">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="">Email</label>
+                                  <input type="email" value="${data.email}" class="form-control">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="">Phone number</label>
+                                  <input type="text" value="${data.phone}" class="form-control">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="">Image</label>
+                                  <input type="file" class="form-control">
+                              </div>`;
 
-    
+        };
+          
+    </script>
+@endsection
