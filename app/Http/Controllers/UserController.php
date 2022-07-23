@@ -93,4 +93,10 @@ class UserController extends Controller
             }
         }
     }
+    public function login(){
+        return view('client.users.login');
+    }
+    public function register(){
+        return view('client.users.register');
+    }
 }

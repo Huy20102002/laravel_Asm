@@ -1,0 +1,340 @@
+.nav-category{
+    display: flex;
+}
+.nav-category li{
+    list-style: none;
+    padding: 0 15px;
+    text-align: left;
+    padding-top: 20px;
+    
+}
+.nav-category li a{
+    color: #5c5b5b;
+    text-transform: uppercase;
+    font-size: 20px;
+
+    margin-bottom: 24px;
+}
+.latest a,.saleoff a{
+    border-right: 1px solid #dedede;
+    padding-right: 25px;
+}
+.main_products{
+    padding-top: 20px;
+}
+.products_content{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    row-gap: 25px;
+    column-gap: 50px;
+}
+.products_grid{
+    position: relative;
+    overflow: hidden;
+}
+.products_img{
+    border: 1px solid #dedede;
+    height: 265px;
+}
+.products_img img{
+    max-width: 100%;
+}
+.products_text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.products_text .item-title{
+    padding: 0;
+    font-size: 14px;
+    margin-bottom: 3px;
+    overflow: hidden;
+}
+.item-title a{
+    color: #333;
+    font-weight: 500;
+}
+
+.price-box .price1{
+    font-size: 16px;
+    color: #222;
+    font-weight: bold;
+    margin-right: 3px;
+}
+.price-box .price2{
+    font-size: 13px;
+    color: #888;
+    text-decoration: line-through;
+}
+.ico-product.ico-new {
+    background: #5492db;
+    -webkit-transition: all 0.5s linear;
+    -moz-transition: all 0.5s linear;
+    -ms-transition: all 0.5s linear;
+    -o-transition: all 0.5s linear;
+    transition: all 0.5s linear;
+    left: -18px;
+    overflow: hidden;
+    transform: rotate(-45deg);
+}
+
+.ico-label span {
+    position: absolute;
+    top: 7px;
+    height: 15px;
+    width: 60px;
+    color: #fff;
+    z-index: 100;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 10px;
+    line-height: 15px;
+}
+ .ico-product.ico-sale {
+    background: #e14141;
+    -webkit-transition: all 0.5s linear;
+    -moz-transition: all 0.5s linear;
+    -ms-transition: all 0.5s linear;
+    -o-transition: all 0.5s linear;
+    transition: all 0.5s linear;
+    right: -15px;
+    overflow: hidden;
+    transform: rotate(45deg);
+}
+.action-bot{
+    text-align: center;
+    z-index: 2;
+    position: absolute;
+    bottom: -45px;
+    transform: translateY(-100%);
+    width: 100%;
+}
+.wrap-addTocart {
+    transform: translateX(100%);
+    transition: all 0.5s ease 0.1s;
+}
+.btn-cart{
+    border: none;
+    background-color: #333;
+    display: block;
+    font-family: inherit;
+    font-weight: 700;
+    width: 100%;
+    cursor: pointer;
+    font-size: 116.667%;
+    line-height: 21px;
+    padding: 0px!important;
+    text-align: center;
+    transition: all 0.25s ease 0s;
+    color: #fff;
+    height: 45px;
+    
+}
+.btn-cart:hover{
+    background-color: #e14141;
+    color: #fff;
+}
+.actions{
+    transform: translateX(0px);
+    display: table;
+    transform: translateX(-100%);
+    transition: all 0.5s ease 0.1s;
+    width: 100%;
+
+}
+.add-to-links{
+    display: table-row;
+}
+.add-to-links li a {
+    color: #666;
+    display: inline-block;
+    width: 100%;
+    line-height: 20px;
+    height: 35px;
+
+}
+.add-to-links li {
+    display: table-cell;
+    position: relative;
+}
+.products_grid:hover .wrap-addTocart{
+    transform: translateX(0%);
+
+}
+.products_grid:hover .actions{
+    transform: translateX(0%);
+}
+.suggest_collection{
+    padding-top: 25px;
+}
+.title_collection h2{
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    
+}
+
+
+
+
+@media only screen  and (max-width:1024px ) {
+    .products_content{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+/* responsive */
+@media only screen  and (max-width:800px) {
+    .nav-category li a{
+     font-size: 19px;
+
+    }
+    .products_content{
+        display: grid;
+        grid-template-columns: 1fr 1fr ;
+    }
+}
+
+@media only screen  and (max-width:768px) {
+    .nav-category li a{
+        font-size: 15px;
+   
+       }
+    .products_content{
+        display: grid;
+        grid-template-columns: 1fr 1fr ;
+    }
+}
+@media only screen  and (max-width:600px ) {
+    .products_content{
+        display: grid;
+        grid-template-columns: 1fr 1fr ;
+    }
+}
+.main_off_chair{
+padding-top: 20px;
+padding-bottom: 20px;
+}
+.slick-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    line-height: 1;
+    z-index: 5;
+    transition: all 0.2s linear;
+  }
+  .slick-arrow:hover {
+    background-color: #2cccff;
+    color: white;
+  }
+  .slick-prev {
+    left: 0;
+  }
+  .slick-next {
+    right: 0;
+  }
+  .slick-dots {
+    
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0 20px;
+  }
+  .slick-dots button {
+    font-size: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 100rem;
+    background-color: #eee;
+    border: none;
+    outline: none;
+    transition: all 0.2s linear;
+  }
+  .slick-dots .slick-active button {
+    background-color: #2cccff;
+  }
+.title-postest h5{
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    display: inline-block;
+    background: #fff;
+    padding-right: 25px;
+    text-transform: uppercase;
+}
+.post-latest{
+    margin-top: 20px;
+}
+.main-post{
+    margin-top: 20px;
+    overflow: hidden;
+}
+.posts-item{
+    overflow: hidden;
+}
+.img-posts{
+    margin-bottom: 20px;
+}
+
+.text-posts{
+    display: inline-block;
+    position: relative;
+    padding-left: 70px;
+}
+.blog-left{
+    text-align: center;
+    border: 1px solid #eaeaea;
+    padding: 2px 9px 0;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.blog-left .text1{
+    font-size: 25px;
+    color: #333;
+    font-weight: bold;
+    display: block;
+    margin: 0;
+}
+.blog-left .text2{
+    position: relative;
+    bottom: 4px;
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    display: block;
+    margin: 0;
+}
+.blog-right{
+    line-height: 15px;
+}
+.blog-right .style1 a{
+    font-size: 12px;
+    color: #e34444;
+}
+.blog-right .style2{
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    margin: 0 0 6px 0;
+}
+.blog-right .style3{
+    color: #666;
+    margin: 0;
+    font-size: 13px;
+}

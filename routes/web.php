@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/',function(){
-});
+// Client
+Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('products',[ProductController::class,'index'])->name('products');
+Route::get('login',[UserController::class,'login'])->name('login');
+Route::get('register',[UserController::class,'register'])->name('register');
 // Admin
 Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('/',[DashboardController::class,'index']);

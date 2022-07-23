@@ -1,0 +1,85 @@
+.filter{
+    border: 1px solid #eaeaea;
+
+}
+.title-filter h5{
+    color: #333;
+    text-transform: uppercase;
+    position: relative;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 0px;
+    background-position: left bottom;
+    padding-bottom: 14px;
+    padding: 20px;
+}
+.main-filter{
+    padding: 20px;
+}
+.title-cate{
+    text-transform: uppercase;
+    position: relative;
+    color: #333333;
+    font-weight: bold;
+    font-size: 12px;
+}
+.main-cate{
+    padding-top: 15px;
+}
+.form-input{
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+.form-input input{
+    font-size: 12px;
+}
+.form-input label{
+    font-size: 12px;
+    padding-left: 15px;
+}
+.form-input label:hover {
+    color: #e34444;
+    cursor: pointer;
+}
+.title-price{
+    color: #333;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.form{
+    display: flex;
+    justify-content: space-between;
+}
+.form-price{
+    justify-content: space-between;
+}
+.form-price input{
+    width: 70px;   
+    outline: none;
+}
+.form button{
+    cursor: pointer;
+    margin-right: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff!important;
+    background: #222;
+    border: 1px solid #222;
+}
+.navfilter{
+    display: none;
+}
+@media only screen and (max-width: 800px)  {
+    .filter{
+        display: none;
+    }
+    .navfilter{
+        display: block;
+    }
+    .navfilter i{
+        font-size: 20px;
+    }
+}
