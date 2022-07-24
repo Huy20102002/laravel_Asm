@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 // Client
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('products',[ProductController::class,'index'])->name('products');
+Route::get('products/details/{id}',[ProductController::class,'indexDetails'])->name('products-details');
+Route::get('lienhe',[ContactController::class,'index'])->name('contact');
 Route::get('login',[UserController::class,'login'])->name('login');
 Route::get('register',[UserController::class,'register'])->name('register');
 // Admin

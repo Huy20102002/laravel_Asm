@@ -13,7 +13,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('login')}}" class="nav-link top-link-login text-light">
+                        <a href="{{ route('login') }}" class="nav-link top-link-login text-light">
                             <i class="fas fa-key"></i> Login
                         </a>
                     </li>
@@ -90,19 +90,23 @@
                 <div id="menu" class="menu">
                     <nav class="navbar navbar-expand-lg d-flex">
                         <ul class="navbar-nav mr-auto d-flex " id="ulMenu">
-                            <li class="nav-item"><a class="nav-link fw-bold  mx-4 linkpage" href="{{route('home')}}">Trang chủ</a>
+                            <li class="nav-item"><a class="nav-link fw-bold  mx-4 linkpage"
+                                    href="{{ route('home') }}">Trang chủ</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link fw-bold  mx-4 linkpage" href="{{route('products')}}">Sản phẩm</a>
+                            <li class="nav-item"><a class="nav-link fw-bold  mx-4 linkpage"
+                                    href="{{ route('products') }}">Sản phẩm</a>
                             </li>
-                       
-                       
+
+
                             <li class="nav-item"><a class="nav-link fw-bold  mx-4 linkpage" href="">Khuyến
                                     mãi</a></li>
                             <li class="nav-item"><a class="nav-link fw-bold  mx-4 linkpage" href="">Tin tức</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link fw-bold  mx-4 linkpage" href="">Liên hệ</a>
+                            <li class="nav-item"><a class="nav-link fw-bold  mx-4 linkpage"
+                                    href="{{ route('contact') }}">Liên hệ</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link fw-bold  mx-4 linkpage" href="">Giới thiệu</a>
+                            <li class="nav-item"><a class="nav-link fw-bold  mx-4 linkpage" href="">Giới
+                                    thiệu</a>
                             </li>
                         </ul>
                     </nav>
@@ -110,10 +114,11 @@
                 <div class="block_topsearch">
                     <div class="top_cart d-flex align-items-center">
                         <div class="mx-3 search">
-                            <span id="search_toggle"><i class="fal fa-search" ></i>
+                            <span id="search_toggle"><i class="fal fa-search"></i>
                             </span>
                             <div class="block_search" id="block_search">
-                                <input type="text" placeholder="Nhập từ khóa cần tìm kiếm....." name="" id="input_search">
+                                <input type="text" placeholder="Nhập từ khóa cần tìm kiếm....." name=""
+                                    id="input_search">
                             </div>
                         </div>
                         <div class="block_cart mx-3 d-flex align-items-center">
@@ -125,25 +130,48 @@
                             <div class="cart_header">
                                 <div class="cart_details">
                                     <div class="head_cart d-flex align-items-center justify-content-between">
-                                        <h2 class="fw-bold">YOUR CART</h2>
+                                        <h2 class="fw-bold">Giỏ Hàng Của Bạn</h2>
                                         <i id="close_cart" class="fal fa-times"></i>
                                     </div>
                                     <div class="main_cart">
-                                       <h2>your cart is empty</h2>
+                                        <div class="cart_your">
+                                            @for ($i = 0; $i < 40; $i++)
+                                                <div class="item-cart">
+                                                    <div class="img-cart pr-3">
+                                                        <img src="http://demo.snstheme.com/html/simen/images/products/13.jpg"
+                                                            width="100" alt="">
+                                                    </div>
+                                                    <div class="title-cart">
+                                                        <div class="title-cart-head">
+                                                            <p>Modular Modern </p>
+                                                            <div class="quantity-cart">
+                                                                <span> <i class="fal fa-times"></i> 1</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="price-cart">
+                                                            <p>500 $</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endfor
+                                        </div>
+                                        <div class="add-CartClient">
+                                            <button class="Payment">Tiến Hành Thanh Toán</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="navres mx-3">
-                            <span id="toggle" class="toggle"><i class="open fal fa-bars"></i>
-                                <i class="close fal fa-times"></i>
-                            </span>
-                        </div>
                     </div>
+                </div>
+                <div class="navres mx-3">
+                    <span id="toggle" class="toggle"><i class="open fal fa-bars"></i>
+                        <i class="close fal fa-times"></i>
+                    </span>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    </div>
 </header>
-
-

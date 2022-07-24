@@ -216,17 +216,21 @@ i {
 
 
 }
-.cart_header{
+
+.cart_header {
     display: none;
 
 }
 
-.carttoggle{
+.carttoggle {
     position: absolute;
     display: block;
-  
+    overflow: hidden;
+
 }
-.cart_details{
+
+.cart_details {
+    overflow-x: scroll;
     z-index: 101;
     position: fixed;
     height: 100%;
@@ -238,27 +242,81 @@ i {
     background-color: #fff;
     animation: CartAnimation 0.4s;
 
+
 }
-.head_cart{
-  border-bottom: 1.5px solid #f7f7f7;
-  padding: 10px;
+
+.head_cart {
+    border-bottom: 1.5px solid #f7f7f7;
+    padding: 10px;
 }
-.head_cart i{
+
+.head_cart i {
     font-size: 20px;
 }
-.head_cart h2{
+
+.head_cart h2 {
     font-size: 25px;
     margin-left: 10px;
 }
-.main_cart h2{
+
+.main_cart h2 {
     font-weight: 300;
     font-size: 20px;
     padding: 5px;
     text-align: center;
 }
-.closeCart{
+
+.closeCart {
     animation: CloseCartAnimation 0.4s;
 
+}
+
+
+.item-cart {
+    margin-top: 10px;
+    display: flex;
+    margin-left: 10px;
+}
+
+.title-cart-head {
+    display: flex;
+    align-items: baseline;
+
+}
+
+.quantity-cart {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.img-cart {
+    border: 1px solid #eaeaea;
+}
+
+.title-cart {
+    margin-left: 10px;
+}
+
+.add-CartClient {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+
+}
+
+.add-CartClient button {
+    outline: none;
+    background-color: #fff;
+    width: 390px;
+    height: 50px;
+    font-weight: bold;
+    border: 1px solid #eaeaea;
+}
+.add-CartClient button:hover{
+    background-color: #e34444;
+    color: #fff;
+    transition: 0.5s;
 }
 
 @keyframes CartAnimation {
@@ -272,6 +330,7 @@ i {
 
     }
 }
+
 @keyframes inputAnimation {
     0% {
         transform: translateY(-30px);
@@ -283,18 +342,22 @@ i {
 
     }
 }
+
 /* Footer */
-.bg-footer{
+.bg-footer {
     padding-top: 10px;
     background-color: #F8F8F6;
 }
-.footer-column{
+
+.footer-column {
     padding-top: 20px;
 }
-.fa-ul{
+
+.fa-ul {
     padding-left: 42px;
 }
-.fa-li{
+
+.fa-li {
     width: 34px;
     height: 34px;
     background: #fff;
@@ -307,28 +370,36 @@ i {
     top: 4px;
 }
 
-.column0 h6, .column1 h6, .column2 h6,.column3 h6,.column4 h6 {
+.column0 h6,
+.column1 h6,
+.column2 h6,
+.column3 h6,
+.column4 h6 {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 16px;
     margin-bottom: 32px;
     color: #333;
 }
-.fa-ul li{
+
+.fa-ul li {
     line-height: 20px;
     min-height: 40px;
     margin-bottom: 8px;
     color: #666;
 }
+
 .column ul li {
     line-height: 22px;
     padding: 3px 0;
     color: #666;
     list-style: none;
 }
-.column ul li a{
+
+.column ul li a {
     color: #666;
 }
-.column0 ul li p a{
+
+.column0 ul li p a {
     color: #666;
 }
