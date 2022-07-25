@@ -7,37 +7,37 @@
     <div class="main-filter">
         <div class="category">
             <div class="title-cate">
-                <h6>Categories</h6>
+                <h6>Danh Mục</h6>
             </div>
             <div class="main-cate">
                 <div class="form-input align-items-center">
                     <input type="checkbox" id="sofas">
-                    <label for="sofas">Sofas & Couches</label>
+                    <label for="sofas">Sofa</label>
                 </div>
 
                 <div class="form-input align-items-center">
                     <input type="checkbox">
-                    <label for="">Living Room Furnuture</label>
+                    <label for="">Bàn Ăn</label>
                 </div>
 
                 <div class="form-input align-items-center">
                     <input type="checkbox">
-                    <label for="">Television Stands</label>
+                    <label for="">Tủ quần áo</label>
                 </div>
 
                 <div class="form-input align-items-center">
                     <input type="checkbox">
-                    <label for="">Coffee Tables</label>
+                    <label for="">Tủ giày</label>
                 </div>
                 <div class="form-input align-items-center">
                     <input type="checkbox">
-                    <label for="">Bedroom Furniture</label>
+                    <label for="">Thảm</label>
                 </div>
             </div>
         </div>
         <div class="price-filter">
             <div class="title-price">
-                <span>Price</span>
+                <span>Giá Tiền</span>
             </div>
             <form action="">
                 <div class="form">
