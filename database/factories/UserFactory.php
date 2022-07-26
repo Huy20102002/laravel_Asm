@@ -24,8 +24,10 @@ class UserFactory extends Factory
             'remember_token' => rand(1,2),
             'age'=>rand(5,20),
             'phone'=>$this->faker->phoneNumber(),
-            'image'=>$this->faker->image()
-          
+            'image'=>$this->faker->image(),
+            'status'=>rand(0,1),
+            'role'=>rand(0,1)
+            
         ];
     }
 }

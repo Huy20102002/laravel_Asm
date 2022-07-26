@@ -75,26 +75,7 @@
                     <div class="form">
                         <form action="" id="formUser">
 
-                            <div class="mb-3">
-                                <label for="">Tên người dùng</label>
-                                <input type="text" value="${data.name}" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="">Sinh năm</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="">Email</label>
-                                <input type="email" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="">Phone number</label>
-                                <input type="number" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="">Image</label>
-                                <input type="file" class="form-control">
-                            </div>
+                          
 
                         </form>
                     </div>

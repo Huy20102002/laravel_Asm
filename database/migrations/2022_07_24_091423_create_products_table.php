@@ -17,6 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('price');
+            $table->string('image');
+            $table->string('overview');
+            $table->string('description');
+            $table->integer('quantity');
+            $table->unsignedInteger('status');
+            $table->unsignedBigInteger('category_id');
+            // $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }
