@@ -11,7 +11,8 @@ class ProductController extends Controller
 {
     public function indexAdmin()
     {
-        return view('admin.product.index');
+        $all = Product::all();
+        return view('admin.product.index',['data'=>$all]);
     }
 
     public function index()
@@ -41,12 +42,33 @@ class ProductController extends Controller
         $product->save();
         return redirect()->route('admin.products.index');
     }
+    public function show($id){
+        $data = Product::find($id);
+        $dataCate = Category::all();
+        return response()->json(['data'=>$data,'dataCate'=>$dataCate]);
+    }
     public function edit($id)
     {
         return view('admin.product.edit');
     }
     public function update(ProductRequest $request, $id)
     {
+            
+    }
+    public function apiUpdate(ProductRequest $request,$id){
+        $product =  Product::find($id);
+        $product->fill($request->all());
+        if ($request->hasFile('image')) {
+            $product->image = $this->saveFile(
+                $request->image,
+                $request->name,
+                'image/product'
+            );
+        }else{
+            $product->image = $product->image;
+        }
+        $product->save();
+        return response()->json(200);
     }
     private function saveFile($file, $prefixName = '', $folder = 'public')
     {

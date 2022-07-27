@@ -26,7 +26,7 @@ class ProductRequest extends FormRequest
         return [
             'name'=>'required',
             'price'=>'required|integer',
-            'image'=>'required|image',
+            'image'=>'required',
             'overview'=>'min:5',
             'description'=>'required|min:5',
             'quantity'=>'required|numeric',
@@ -41,7 +41,6 @@ class ProductRequest extends FormRequest
             'price.required'=>'Vui lòng nhập giá sản phẩm',
             'price.integer'=>'Giá tiền phải là chữ số',
             'image.required'=>'Vui lòng nhập ảnh',
-            'image.image'=>'Không đúng định dạng',
             'overview.min'=>'Vui lòng nhập tối thiểu 6 chữ số',
             'description.required'=>'Vui lòng nhập mô tả',
             'description.min'=>'Mô tả phải tối thiểu 5 chữ số',

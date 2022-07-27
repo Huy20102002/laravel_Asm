@@ -17,7 +17,7 @@
 @section('title_content', 'Thêm Sản Phẩm')
 @section('content')
     <div class="card">
-        <form action="{{ route('admin.products.store') }}" method="POST">
+        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="p-2">
                 <label for="">Tên sản phẩm</label>
@@ -42,7 +42,7 @@
             @endif
             <div class="p-2">
                 <label for="">Hình ảnh</label>
-                <input type="file" name="image[]" multiple class="form-control">
+                <input type="file" name="image" multiple class="form-control">
             </div>
             @if ($errors->has('image'))
                 <span class="text-danger"> {{ $errors->first('image') }}</span>

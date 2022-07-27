@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 // Client
 Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('/cart',[CartController::class,'index'])->name('cart');
 Route::get('products',[ProductController::class,'index'])->name('products');
 Route::get('products/details/{id}',[ProductController::class,'indexDetails'])->name('products-details');
 Route::get('lienhe',[ContactController::class,'index'])->name('contact');
@@ -49,7 +51,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
        Route::get('/',[ProductController::class,'indexAdmin'])->name('index');
        Route::get('/add',[ProductController::class,'create'])->name('create');
        Route::post('/save-add',[ProductController::class,'store'])->name('store');
+       Route::get('show/{id}',[ProductController::class,'show'])->name('show');
        Route::get('/edit/{id}',[ProductController::class,'edit'])->name('edit');
        Route::put('/update',[ProductController::class,'update'])->name('update');
+       Route::put('/apiUpdate',[ProductController::class,'apiUpdate'])->name('apiUpdate');
+       
     });
 });

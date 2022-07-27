@@ -35,6 +35,29 @@
                 </div>
             </div>
         </div>
+        <div class="size">
+            <div class="title-size mb-3">
+                <span class="fw-bold">Kích Thước</span>
+            </div>
+            <div class="main-size">
+                <div class="form-input align-items-center">
+                    <input type="checkbox" id="sofas">
+                    <label for="sofas">Lớn</label>
+                </div>
+
+                <div class="form-input align-items-center">
+                    <input type="checkbox">
+                    <label for="">Vừa</label>
+                </div>
+
+                <div class="form-input align-items-center">
+                    <input type="checkbox">
+                    <label for="">Nhỏ</label>
+                </div>
+
+               
+            </div>
+        </div>
         <div class="price-filter">
             <div class="title-price">
                 <span>Giá Tiền</span>
