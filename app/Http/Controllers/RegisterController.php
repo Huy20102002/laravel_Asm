@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class RegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +16,21 @@ class UserController extends Controller
      */
     public function index()
     {
-        // Alert::success('Success Title', 'Success Message');
-        $list_user =  User::select('id','name', 'age', 'email', 'phone', 'image')
-        ->paginate(15);
-        return view('admin.users.index',['data'=>$list_user]);
+        return view('client.users.register');
     }
+    public function register(Request $request)
+    {
 
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'status'=>1,
+            'role'=>1  
+        ]);
+
+        return redirect()->route('login');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -28,7 +38,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.add');
+        //
     }
 
     /**
@@ -50,8 +60,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $data = User::find($id);
-        return  response()->json(['data'=>$data]);
+        //
     }
 
     /**
@@ -85,13 +94,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        alert()->question('Title','Lorem Lorem Lorem');
-        if($id){
-            $user = User::find($id);
-            if($user->delete()){
-                return redirect()->back();
-            }
-        }
+        //
     }
-
 }

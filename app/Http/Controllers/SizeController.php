@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Size;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 
-class UserController extends Controller
+class SizeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        // Alert::success('Success Title', 'Success Message');
-        $list_user =  User::select('id','name', 'age', 'email', 'phone', 'image')
-        ->paginate(15);
-        return view('admin.users.index',['data'=>$list_user]);
+        $size = Size::all();
+        return view('admin.size.index',['size'=>$size]);
     }
 
     /**
@@ -28,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.add');
+        return view('admin.size.add');
     }
 
     /**
@@ -39,7 +36,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $size = new Size();
+        $size->fill($request->all());
+        $size->save();
     }
 
     /**
@@ -50,8 +49,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $data = User::find($id);
-        return  response()->json(['data'=>$data]);
+        $size = Size::find($id);
+     
     }
 
     /**
@@ -62,7 +61,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $size = Size::find($id);
+
+        return view('admin.size.edit',['data'=>$size]);
     }
 
     /**
@@ -85,13 +86,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        alert()->question('Title','Lorem Lorem Lorem');
-        if($id){
-            $user = User::find($id);
-            if($user->delete()){
-                return redirect()->back();
-            }
-        }
+        //
     }
-
 }

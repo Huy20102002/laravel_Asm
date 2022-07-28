@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Color;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 
-class UserController extends Controller
+class CollorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        // Alert::success('Success Title', 'Success Message');
-        $list_user =  User::select('id','name', 'age', 'email', 'phone', 'image')
-        ->paginate(15);
-        return view('admin.users.index',['data'=>$list_user]);
+        $all = Color::all();
+        return view('admin.color.index',['data'=>$all]);
+
     }
 
     /**
@@ -28,7 +26,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.add');
+        return view('admin.color.add');
+
     }
 
     /**
@@ -39,7 +38,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $color = new Color();
+        $color->fill($request->all());
+        $color->save();
+        return redirect()->route('admin.color.index');
     }
 
     /**
@@ -50,8 +52,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $data = User::find($id);
-        return  response()->json(['data'=>$data]);
+        //
     }
 
     /**
@@ -62,7 +63,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $color = Color::find($id);
+        return view('admin.color.edit',['data'=>$color]);
     }
 
     /**
@@ -85,13 +87,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        alert()->question('Title','Lorem Lorem Lorem');
-        if($id){
-            $user = User::find($id);
-            if($user->delete()){
-                return redirect()->back();
-            }
-        }
+        //
     }
-
 }

@@ -23,6 +23,9 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                // return redirect(RouteServiceProvider::Home)
+                // Di chuyển về đường dẫn này nếu đã đăng nhập rồi
+                // Mà vẫn cố tình vào các route có middle guest
                 return redirect(RouteServiceProvider::HOME);
             }
         }

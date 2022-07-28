@@ -2,7 +2,7 @@
 <span class="navfilter"><i class="fal fa-bars"></i></span>
 <div class="filter">
     <div class="title-filter">
-        <h5>SHOP BY</h5>
+        <h5>BỘ LỌC</h5>
     </div>
     <div class="main-filter">
         <div class="category">

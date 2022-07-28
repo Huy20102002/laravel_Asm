@@ -155,7 +155,41 @@
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <div class="form-comment">
-                                    <div class="form-comment">
+                                    <div class="rating card-header">
+                                        <form class="rating m-3">
+                                            <label>
+                                                <input type="radio" name="stars" value="1" />
+                                                <span class="icon">★</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="stars" value="2" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="stars" value="3" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="stars" value="4" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="stars" value="5" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                            </label>
+                                        </form>
+                                    </div>
+                                    <div class="form-comment m-3">
                                         <textarea id="comment-products" rows="3" placeholder="Viết gì đó..."></textarea>
                                         <div class="form-comment-post">
                                             <a href="#" class="post-comment">Bình luận</a>

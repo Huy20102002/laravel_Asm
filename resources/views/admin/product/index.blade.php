@@ -46,12 +46,12 @@
                                 <td class="">
                                     <div class="d-flex">
                                         <div class="m-2">
-                                            <button onclick="getData('{{ $product->id }}')" class="btn btn-primary"
-                                                data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                                            <button  class="btn btn-primary"
+                                                 ><i
                                                     class="fas fa-info-circle"></i></button>
                                         </div>
                                         <div class="m-2">
-                                            <form action="{{ route('admin.cate.delete', $product->id) }}" method="POST">
+                                            <form action="{{ route('admin.products.delete', $product->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -89,7 +89,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="">Hình ảnh</label>
-                            <input type="text" value="" class="form-control">
+                            <input type="file" value="" class="form-control">
                             <div class="mb-3">
                                 <img src="" id="image" width="150 "  alt="">
                             </div>
@@ -138,86 +138,3 @@
     </div>
 @endsection
 
-
-@section('script')
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
-
-    <script>
-        let DescriptionEditor;
-        ClassicEditor.create(document.querySelector('#description'), {
-                removePlugins: ['dragdrop']
-            })
-            .then(editor => {
-                window.editor = editor;
-                DescriptionEditor = editor;
-            })
-
-            .catch(function(err) {
-                console.error(err);
-            });
-        let OverViewEditor;
-        ClassicEditor.create(document.querySelector('#overview'))
-            .then(editor => {
-                window.editor = editor;
-                OverViewEditor = editor;
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        const getData = (id) => {
-            $.ajax({
-                url: `http://localhost:8000/admin/products/show/${id}`,
-                method: "GET",
-                success: function(value) {
-                    const {
-                        data,
-                        dataCate
-                    } = value;
-                    $("#name").val(data.name);
-                    $("#price").val(data.price);
-                    $("#image").attr("src",`{{asset('${data.image}')}}`);
-                    $("#overview").val(data.overview);
-                    $("#description").val(data.description);
-                    $("#quantity").val(data.quantity);
-                    $("#status").val(data.status);
-                    dataCate.map(element => {
-                        $(".category_id").append(`<option value='${element.id}' 
-                        ${element.id ==data.category_id ? 'selected' : ''}>${element.name}</option>`);
-                    });
-                    DescriptionEditor.setData(data.description);
-                    OverViewEditor.setData(data.overview);
-                }
-            })
-        };
-        const update = () => {
-
-            let name = $("#nameCate").val();
-            let status = $("#status").val();
-            let id = $("#id").val();
-            $.ajax({
-                url: `http://localhost:8000/admin/products/apiUpdate/${id}`,
-                method: "PUT",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    name: name,
-                    status: status,
-                    id: id
-                },
-                success: function(response) {
-                    window.location = "http://localhost:8000/admin/products";
-                },
-                error: function(error) {
-                    const {
-                        message
-                    } = error.responseJSON
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `${message}`,
-                    })
-
-                }
-            })
-        };
-    </script>
-@endsection

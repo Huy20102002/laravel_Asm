@@ -1,22 +1,39 @@
 <header>
+    <?php $Auth = Auth::user()?>
     <div class="header-top bg-dark">
         <div class="container">
             <div class="customer-ct p-0 navbar navbar-expand-lg d-flex justify-content-end">
                 <ul class="ul-top navbar-nav  mr-auto  ">
                     <li class="first nav-item ">
                         <a href="" class=" nav-link top-link-account text-light">
-                            <i class="fas fa-user"></i> My accounts</a>
+                            <i class="fas fa-user"></i> 
+                          @if ($Auth)
+                              {{$Auth->name}}
+                          @else
+                          My accounts
+                          @endif
+                        
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a href="" class="nav-link top-link-wishlist text-light">
                             <i class="far fa-heart"></i> My wishlist
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ route('login') }}" class="nav-link top-link-login text-light">
+                    @if ($Auth)
+                    <li  class="nav-item">
+                        <a href="{{ route('logout') }}" class="nav-link top-link-login text-light">
+                            <i class="far fa-sign-out"></i> Đăng xuất
+                        </a>
+                    </li>
+                    @else
+                    <li  class="nav-item">
+                        <a href="{{ route('auth.login') }}" class="nav-link top-link-login text-light">
                             <i class="fas fa-key"></i> Login
                         </a>
                     </li>
+                    @endif
+                    
                 </ul>
             </div>
         </div>
@@ -156,7 +173,11 @@
                                             @endfor
                                         </div>
                                         <div class="add-CartClient">
-                                            <button class="Payment">Tiến Hành Thanh Toán</button>
+                                            <form action="{{route('cart')}}" method="POST">
+                                                @csrf
+                                                @method('GET')
+                                                <button class="Payment">Tiến Hành Thanh Toán</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

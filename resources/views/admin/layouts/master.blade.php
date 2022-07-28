@@ -111,6 +111,34 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fa fa-palette"></i>
+                    <span>Màu sắc</span>
+                </a>
+                <div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Danh Sách:</h6>
+                        <a class="collapse-item" href="{{route('admin.color.index')}}">Danh Sách Màu Sắc</a>
+                        <a class="collapse-item" href="{{route('admin.color.add')}}">Thêm Màu Sắc</a>                       
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                  <span>Kích thước</span>
+                </a>
+                <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Danh Sách:</h6>
+                        <a class="collapse-item" href="{{route('admin.size.index')}}">Danh Sách Kích Thước</a>
+                        <a class="collapse-item" href="{{route('admin.color.add')}}">Thêm Kích Thước</a>                       
+                    </div>
+                </div>
+            </li>
             <!-- Divider -->
     
 

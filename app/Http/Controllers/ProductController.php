@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
+use App\Models\Size;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -26,7 +28,12 @@ class ProductController extends Controller
     public function create()
     {
         $dataCate = Category::all();
-        return view('admin.product.add', ['dataCate' => $dataCate]);
+        $dataSize = Size::all();
+        $dataColor = Color::all();
+        return view('admin.product.add',
+         ['dataCate' => $dataCate,
+         'dataSize'=>$dataSize,
+         'dataColor'=>$dataColor]);
     }
     public function store(ProductRequest $request)
     {
@@ -75,5 +82,11 @@ class ProductController extends Controller
         $fileName = $file->hashName();
         $fileName = $prefixName ? $prefixName . '_' . $fileName : $fileName;
         return $file->storeAs($folder, $fileName);
+    }
+    public function destroy($id){
+        
+        $product = Product::find($id);
+        $product->delete();
+        return redirect()->back();
     }
 }
