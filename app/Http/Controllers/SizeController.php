@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SizeRequest;
 use App\Models\Size;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,9 @@ class SizeController extends Controller
      */
     public function index()
     {
-        $size = Size::all();
-        return view('admin.size.index',['size'=>$size]);
+        $size = Size::select('id','name','status')
+        ->paginate(10);
+        return view('admin.size.index',['data'=>$size]);
     }
 
     /**
@@ -34,11 +36,12 @@ class SizeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SizeRequest $request)
     {
         $size = new Size();
         $size->fill($request->all());
         $size->save();
+        return redirect()->route('admin.size.index');
     }
 
     /**
@@ -73,9 +76,12 @@ class SizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SizeRequest $request, $id)
     {
-        //
+        $color = Size::find($id);
+        $color->fill($request->all());
+        $color->save();
+        return redirect()->route('admin.size.index');
     }
 
     /**
@@ -86,6 +92,11 @@ class SizeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if($id){
+            $color = Size::find($id);
+            if($color->delete()){
+                return redirect()->route('admin.size.index');
+            }
+          }
     }
 }

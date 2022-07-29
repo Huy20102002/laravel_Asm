@@ -12,6 +12,7 @@
             margin: 20px auto;
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/products/select_size.css') }}">
 @endsection
 @section('title', 'Thêm Sản Phẩm')
 @section('title_content', 'Thêm Sản Phẩm')
@@ -82,12 +83,12 @@
             <div class="p-2">
                 <label for="discount">Giảm giá</label>
                 <label for="sale">
-                    <input type="checkbox" class="discount p-3" value="1" id="sale">
+                    <input type="checkbox" name="sale" class="discount p-3" value="1" id="sale">
                 </label>
             </div>
             <div class="p-2" id="checkdiscount" style="display:none">
                 <label for="">Phần trăm cần giảm:</label>
-                <input type="number" class="form-control" name="discount">
+                <input type="number" class="form-control"  name="discount">
             </div>
             <div class="p-2">
                 <label for="">Thuộc tính</label>
@@ -98,11 +99,26 @@
             <div class="p-2" id="checksize" style="display:none">
                 <div class="mb-3">
                     <label for="">Size: </label>
-                    <input type="number" class="form-control" name="sale">
+                    <div class="d-flex">
+                    @foreach ($dataSize as $index=> $item)
+                            <label for="size{{$index}}" id="labelSize{{$index}}"  class="labelsize btn btn-outline-primary m-2">
+                                {{$item->name}}
+                            <input type="checkbox"  name="size_id[]" id="size{{$index}}"  value="{{ $item->id }}">
+                            </label>
+                    @endforeach
+                </div>
+
                 </div>
                 <div class="mb-3">
                     <label for="">Color: </label>
-                    <input type="number" class="form-control" name="sale">
+                    @foreach ($dataColor as $index=> $item)
+                        <div class="d-flex">
+                            <label for="color{{$index}}" class="btn btn-outline-primary" >
+                            {{$item->name}}
+                            <input type="checkbox" name=color_id[] id="color{{$index}}" value="{{ $item->id }}">
+                        </label>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="p-2">
@@ -124,7 +140,9 @@
 
 @endsection
 @section('script')
+
     <script type="text/javascript">
+  
         $('#sale').click(function() {
             $("#checkdiscount").toggle(this.checked);
         });

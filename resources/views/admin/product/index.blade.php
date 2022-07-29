@@ -38,7 +38,7 @@
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->quantity }}</td>
                                 <td>{{ $product->status ? 'Hoạt động' : 'Không hoạt động' }}</td>
-                                <td>{{ $product->category_id }}</td>
+                                <td>{{ $product->category->name }}</td>
                                 <td>
                                     <img src=" {{ asset($product->image) }}" width="150" alt="">
                                 </td>
@@ -46,9 +46,9 @@
                                 <td class="">
                                     <div class="d-flex">
                                         <div class="m-2">
-                                            <button  class="btn btn-primary"
+                                            <a href="{{route('admin.products.edit',$product->id)}}" class="btn btn-primary"
                                                  ><i
-                                                    class="fas fa-info-circle"></i></button>
+                                                    class="fas fa-info-circle"></i></a>
                                         </div>
                                         <div class="m-2">
                                             <form action="{{ route('admin.products.delete', $product->id) }}" method="POST">
@@ -64,7 +64,7 @@
                     </tbody>
                 </table>
                 <div>
-                    {{-- {{ $data->links() }} --}}
+                    {{ $data->links() }}
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@
             </div>
         </div>
         <div>
-            <a href="{{ route('admin.size.add') }}" class="btn btn-primary">Thêm Size</a>
+            <a href="{{ route('admin.size.add') }}" class="btn btn-primary">Thêm kích thước</a>
         </div>
     </div>
     <div class="card-body">
@@ -27,24 +27,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $index => $cate)
+                    @foreach ($data as $index => $size)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $cate->name }}</td>
-                            <td>{{ $cate->status ? 'Hoạt động' : 'Không hoạt động' }}</td>
+                            <td>{{ $size->name }}</td>
+                            <td>{{ $size->status ? 'Hoạt động' : 'Không hoạt động' }}</td>
 
                             <td class="">
                                 <div class="d-flex">
                                     <div class="m-2">
-                                        <button onclick="getData('{{ $cate->id }}')" class="btn btn-primary"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                                class="fas fa-info-circle"></i></button>
+                                       <a href="" class="btn btn-primary"><i class="far fa-edit"></i></a>
                                     </div>
                                     <div class="m-2">
-                                        <form action="{{ route('admin.cate.delete', $cate->id) }}" method="POST">
+                                        <form action="{{ route('admin.size.destroy', $size->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button onclick="deleteInformation('{{ $cate}}')" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                            <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                         </form>
                                     </div>
                                 </div>
@@ -54,7 +52,7 @@
                 </tbody>
             </table>
             <div>
-                {{-- {{ $data->links() }} --}}
+                {{ $data->links() }}
             </div>
         </div>
     </div>

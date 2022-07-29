@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 // Client
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('homepage');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('products', [ProductController::class, 'index'])->name('products');
 Route::get('products/details/{id}', [ProductController::class, 'indexDetails'])->name('products-details');
@@ -70,7 +71,7 @@ Route::middleware(['auth','authActive','authStatus'])->prefix('admin')->name('ad
     Route::post('/save-add', [ProductController::class, 'store'])->name('store');
     Route::get('show/{id}', [ProductController::class, 'show'])->name('show');
     Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
-    Route::put('/update', [ProductController::class, 'update'])->name('update');
+    Route::put('/update/{id}', [ProductController::class, 'update'])->name('update');
     Route::put('/apiUpdate', [ProductController::class, 'apiUpdate'])->name('apiUpdate');
     Route::delete('delete/{id}', [ProductController::class, 'destroy'])->name('delete');
   });
@@ -78,10 +79,17 @@ Route::middleware(['auth','authActive','authStatus'])->prefix('admin')->name('ad
     Route::get('/',[SizeController::class,'index'])->name('index');
     Route::get('add',[SizeController::class,'create'])->name('add');
     Route::post('save-add',[SizeController::class,'store'])->name('save-add');
+    Route::get('edit/{id}',[SizeController::class,'edit'])->name('edit');
+    Route::put('update/{id}',[SizeController::class,'update'])->name('update');
+    Route::delete('delete/{id}',[SizeController::class,'destroy'])->name('destroy');
+
   });
   Route::prefix('color')->name('color.')->group(function(){
     Route::get('/',[CollorController::class,'index'])->name('index');
     Route::get('add',[CollorController::class,'create'])->name('add');
     Route::post('save-add',[CollorController::class,'store'])->name('save-add');
+    Route::get('edit/{id}',[CollorController::class,'edit'])->name('edit');
+    Route::put('update/{id}',[CollorController::class,'update'])->name('update');
+    Route::delete('delete/{id}',[CollorController::class,'destroy'])->name('destroy');
   });
 });

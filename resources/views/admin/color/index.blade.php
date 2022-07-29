@@ -27,24 +27,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $index => $cate)
+                    @foreach ($data as $index => $color)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $cate->name }}</td>
-                            <td>{{ $cate->status ? 'Hoạt động' : 'Không hoạt động' }}</td>
+                            <td>{{ $color->name }}</td>
+                            <td>{{ $color->status ? 'Hoạt động' : 'Không hoạt động' }}</td>
 
                             <td class="">
                                 <div class="d-flex">
                                     <div class="m-2">
-                                        <button onclick="getData('{{ $cate->id }}')" class="btn btn-primary"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                                class="fas fa-info-circle"></i></button>
+                                        <a href="{{route('admin.color.edit',$color->id)}}" class="btn btn-primary"><i class="far fa-edit"></i></a>
+
                                     </div>
                                     <div class="m-2">
-                                        <form action="{{ route('admin.cate.delete', $cate->id) }}" method="POST">
+                                        <form action="{{ route('admin.cate.delete', $color->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button onclick="deleteInformation('{{ $cate}}')" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                            <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                         </form>
                                     </div>
                                 </div>
@@ -54,7 +53,7 @@
                 </tbody>
             </table>
             <div>
-                {{-- {{ $data->links() }} --}}
+                {{ $data->links() }}
             </div>
         </div>
     </div>

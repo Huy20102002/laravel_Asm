@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('/css/loading.css')}}">
+    @yield('style')
 </head>
 <style type="text/css">
   
@@ -29,6 +30,7 @@
 </style>
 
 <body id="page-top">
+    <?php $Auth = Auth::user(); ?>
     <div class="loader-container">
         <div class="loader"></div>
     </div>
@@ -63,7 +65,19 @@
             <div class="sidebar-heading">
                 Danh Mục
             </div>
-
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages4"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                  <span>Đơn hàng</span>
+                </a>
+                <div id="collapsePages4" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Danh Sách:</h6>
+                        <a class="collapse-item" href="{{route('admin.size.index')}}">Danh Sách Đơn Hàng</a>
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseTwo"
@@ -136,6 +150,34 @@
                         <h6 class="collapse-header">Danh Sách:</h6>
                         <a class="collapse-item" href="{{route('admin.size.index')}}">Danh Sách Kích Thước</a>
                         <a class="collapse-item" href="{{route('admin.color.add')}}">Thêm Kích Thước</a>                       
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages5"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                  <span>Slide</span>
+                </a>
+                <div id="collapsePages5" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Danh Sách:</h6>
+                        <a class="collapse-item" href="{{route('admin.size.index')}}">Danh Sách Slide</a>
+                        <a class="collapse-item" href="{{route('admin.color.add')}}">Thêm Slide</a>                       
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages6"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                  <span>Thống kê</span>
+                </a>
+                <div id="collapsePages6" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Danh Sách:</h6>
+                        <a class="collapse-item" href="{{route('admin.size.index')}}">Danh Sách Bình luận</a>
+                        <a class="collapse-item" href="{{route('admin.color.add')}}">Thống kê sản phẩm</a>                       
                     </div>
                 </div>
             </li>
@@ -355,7 +397,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$Auth->name}}</span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -363,21 +405,21 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Thông tin
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    Cài đặt
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal"
+                                <a class="dropdown-item" href="{{route('logout')}}" data-toggle="modal"
                                     data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Đăng Xuất
                                 </a>
                             </div>
                         </li>
@@ -433,15 +475,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn có muốn đăng xuất ?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Bạn sẽ thoát khỏi trang admin</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
+                    <a class="btn btn-primary" href="{{route('logout')}}">Đăng xuất</a>
                 </div>
             </div>
         </div>

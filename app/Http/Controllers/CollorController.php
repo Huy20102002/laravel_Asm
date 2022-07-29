@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ColorRequest;
 use App\Models\Color;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CollorController extends Controller
@@ -14,7 +16,8 @@ class CollorController extends Controller
      */
     public function index()
     {
-        $all = Color::all();
+        $all = Color::select('id','name','status')
+        ->paginate(10);
         return view('admin.color.index',['data'=>$all]);
 
     }
@@ -36,7 +39,7 @@ class CollorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ColorRequest $request)
     {
         $color = new Color();
         $color->fill($request->all());
@@ -74,9 +77,12 @@ class CollorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ColorRequest $request, $id)
     {
-        //
+        $color = Color::find($id);
+        $color->fill($request->all());
+        $color->save();
+        return redirect()->route('admin.color.index');
     }
 
     /**
@@ -87,6 +93,11 @@ class CollorController extends Controller
      */
     public function destroy($id)
     {
-        //
+      if($id){
+        $color = Color::find($id);
+        if($color->delete()){
+            return redirect()->route('admin.color.index');
+        }
+      }
     }
 }

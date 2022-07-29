@@ -26,6 +26,11 @@
 
         </div>
         <div class="mb-3">
+            @if ($errors->has('status'))
+           <span class="text-danger"> {{ $errors->first('status') }}</span>
+        @endif
+        </div>
+        <div class="mb-3">
             <button class="btn btn-primary">Lưu</button>
         </div>
     </form>
