@@ -6,7 +6,9 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Product;
+use App\Models\product_color;
 use App\Models\Product_detail;
+use App\Models\product_size;
 use App\Models\Size;
 use Illuminate\Http\Request;
 
@@ -81,21 +83,31 @@ class ProductController extends Controller
         $dataSize = Size::all();
         $dataColor = Color::all();
         $data = Product::find($id);
-
         $data_detail = $data->product_detail;
-        $detail_size = json_decode($data_detail->size_id);
-        $detail_color = json_decode($data_detail->color_id);
+        $product_size  = json_decode($data_detail->size_id);
+        $product_color  = json_decode($data_detail->color_id);
+        $items_color = array();
+        $items_size = array();
+        foreach ($product_color as $value) {
+            $items_color[] = $value;
+        }
+        foreach ($product_size as $value) {
+            $items_size[] = $value;
+        }
         return view('admin.product.edit', [
             'data' => $data,
             'data_detail' => $data_detail,
             'dataCate' => $dataCate,
             'dataSize' => $dataSize,
             'dataColor' => $dataColor,
-            'detail_color' => $detail_color,
-            'detail_size' => $detail_size,
+            'product_size' => $product_size,
+            'product_color' => $product_color,
+            'items_color' =>  $items_color,
+            'items_size' =>$items_size
+
         ]);
     }
-    public function update(ProductRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $product = Product::find($id);
         $data_detail = $product->product_detail;
@@ -114,8 +126,9 @@ class ProductController extends Controller
         } else {
             $price_sale = 0;
         }
-        $product_detail->fill($request->all());
+        $product->fill($request->all());
         $product->save();
+        $product_detail->fill($request->all());
         $product_detail->product_id = $product->id;
         $product_detail->price_sale = $price_sale;
         $product_detail->size_id = json_encode($request->size_id);
@@ -137,7 +150,7 @@ class ProductController extends Controller
         } else {
             $product->image = $product->image;
         }
-        $product->save();
+        // $product->save();
         return response()->json(200);
     }
     private function saveFile($file, $prefixName = '', $folder = 'public')

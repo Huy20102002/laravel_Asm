@@ -18,7 +18,7 @@
 @section('title_content', 'Chỉnh Sửa Sản Phẩm')
 @section('content')
     <div class="card">
-        <form action="{{ route('admin.products.update',$data->id)}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.products.update', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">
@@ -48,7 +48,13 @@
                     @endif
                     <div class="p-2">
                         <label for="">Hình ảnh</label>
-                        <input type="file" name="image" class="form-control">
+                        <input type="file" name="thumbnail_url" class="form-control">
+                    </div>
+                    <div class="p-2">
+                        <label for="">Ảnh</label>
+                        <img src="{{ asset($data->image) }}" alt="">
+                        <input type="hidden" value="{{$data->image}}" name="image" class="form-control">
+
                     </div>
                     @if ($errors->has('image'))
                         <span class="text-danger"> {{ $errors->first('image') }}</span>
@@ -99,19 +105,17 @@
             <div class="p-2">
                 <label for="">Thuộc tính</label>
                 <label for="propeties">
-                    @if (!empty($detail_size) && !empty($detail_color))
-                    <input type="checkbox" checked  class="propeties p-3"
-                    value="1" id="propeties"> 
+                    @if (!empty($product_color) || !empty($product_size))
+                        <input type="checkbox" checked class="propeties p-3" value="1" id="propeties">
                     @else
-                    <input type="checkbox"   class="propeties p-3"
-                    value="1" id="propeties">
+                        <input type="checkbox" class="propeties p-3" value="1" id="propeties">
                     @endif
-                
-                      
+
+
                 </label>
             </div>
             <div class="p-2" id="checksize"
-                style="{{!empty($detail_size) && !empty($detail_color)  ? 'display:block' : 'display:none' }}">
+                style="{{ !empty($product_color) || !empty($product_size) ? 'display:block' : 'display:none' }}">
                 <div class="mb-3">
                     <label for="">Size: </label>
                     <div class="d-flex">
@@ -119,14 +123,9 @@
                             <label for="size{{ $index }}" id="labelSize{{ $index }}"
                                 class="labelsize btn btn-outline-primary m-2">
                                 {{ $item->name }}
-                                @if (!empty($detail_size))
-                                    <input type="checkbox" name="size_id[]" id="size{{ $index }}"
-                                        {{ $item->id == $detail_size[$index] ? 'checked' : '' }}
+                                    <input type="checkbox" {{in_array($item->id,$items_size) ? 'checked' : ''}} name="size_id[]" id="size{{ $index }}"
                                         value="{{ $item->id }}">
-                                @else
-                                    <input type="checkbox" name="size_id[]" id="size{{ $index }}"
-                                        value="{{ $item->id }}">
-                                @endif
+                            
                             </label>
                         @endforeach
                     </div>
@@ -134,27 +133,26 @@
                 </div>
                 <div class="mb-3">
                     <label for="">Color: </label>
-                    @foreach ($dataColor as $index => $item)
-                        <div class="d-flex">
-                            <label for="color{{ $index }}" class="btn btn-outline-primary">
+                    <div class="d-flex">
+                        @foreach ($dataColor as $index => $item)
+                            <label for="color{{ $index }}" class="btn btn-outline-primary m-2">
                                 {{ $item->name }}
-                                @if (!empty($detail_color))
-                                    <input type="checkbox" {{ $item->id == $detail_color[$index] ? 'checked' : '' }}
-                                        name="color_id[]" id="color{{ $index }}" value="{{ $item->id }}">
-                                @else
-                                    <input type="checkbox" name=color_id[] id="color{{ $index }}"
-                                        value="{{ $item->id }}">
-                                @endif
+                                <?php $a =[6,4]; ?>
+                                <input type="checkbox" {{in_array($item->id,$items_color) ? 'checked' : ''}} class="checkboxSize"
+                                    name="color_id[]" id="color{{ $index }}" value="{{ $item->id }}">
                             </label>
-                        </div>
-                    @endforeach
+                        @endforeach
+
+
+                    </div>
+
                 </div>
             </div>
             <div class="p-2">
                 <label for="">Danh Mục</label>
                 <select name="category_id" id="" class="form-control">
                     @foreach ($dataCate as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        <option value="{{ $item->id }}" @selected($item->id == $data->category_id)>{{ $item->name }}</option>
                     @endforeach
                 </select>
             </div>
