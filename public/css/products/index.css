@@ -201,9 +201,17 @@
     font-weight: bold;
     
 }
-
-
-
+.active>.page-link, .page-link.active{
+    background-color: #222;
+    color: #fff;
+    border-color: #222;
+}
+.page-link{
+    color: #222;
+}
+.page-link:hover{
+    color: #222;
+}
 @media only screen  and (max-width:1024px ) {
     .products_content{
         display: grid;

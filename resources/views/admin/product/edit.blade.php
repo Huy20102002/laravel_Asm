@@ -46,16 +46,17 @@
                     @if ($errors->has('quantity'))
                         <span class="text-danger"> {{ $errors->first('quantity') }}</span>
                     @endif
-                    <div class="p-2">
-                        <label for="">Hình ảnh</label>
-                        <input type="file" name="thumbnail_url" class="form-control">
+                    <div class="p-2 d-flex justify-content-between">
+                         <div class="">
+                            <label for="">Hình ảnh</label>
+                            <input type="file"  name="thumb_img" class="form-control">
+                         </div>
+                        <div class="ml-2">
+                            <img src="{{ asset($data->image) }}" width="150" alt="">
+                            <input type="hidden" value="{{$data->image}}" name="image" class="form-control">
+                        </div>
                     </div>
-                    <div class="p-2">
-                        <label for="">Ảnh</label>
-                        <img src="{{ asset($data->image) }}" alt="">
-                        <input type="hidden" value="{{$data->image}}" name="image" class="form-control">
-
-                    </div>
+              
                     @if ($errors->has('image'))
                         <span class="text-danger"> {{ $errors->first('image') }}</span>
                     @endif

@@ -38,31 +38,33 @@
                        </div>
                        <div class="main-right">
                            <div class="products_content">
-                             @for($i = 0; $i<=10;$i++)
+                             @foreach($data as $item)
                              <div class="products_grid">
                                 <div class="ico-label">
                                     <span class="ico-product ico-new">New</span>
+                                    @if ($item->sale ==1)
                                     <span class="ico-product ico-sale">Sale</span>
+                                    @endif
                                 </div>
                                 <div class="products_img">
-                                    <a href="{{route('products-details',$i)}}">
-                                        <img src="http://demo.snstheme.com/html/simen/images/products/1.jpg" alt="">
+                                    <a href="{{route('products-details',$item->id)}}">
+                                        <img src="{{$item->image}}" alt="">
                                     </a>
                                 </div>
                                 <div class="products_text">
                                     <div class="item-title">
-                                        <a href="">Modular Modern</a>
+                                        <a href="">{{$item->name}}</a>
                                     </div>
                                     <div class="item-price">
                                         <div class="price-box">
-                                            <span class="price1">$ 540.00</span>
-                                            <span class="price2">$ 600.00</span>
+                                            <span class="price1">{{$item->sale == 1 ? number_format($item->product_detail->price_sale) : number_format($item->price)}}</span>
+                                            <span class="price2">{{$item->sale == 1 ? number_format($item->price) : '' }}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="action-bot">
                                     <div class="wrap-addTocart">
-                                        <button class=" btn-cart" title="Add To Cart">Add To Cart</button>
+                                        <button class=" btn-cart" title="Add To Cart">Thêm Vào Giỏ Hàng</button>
                                     </div>
                                     <div class="actions">
                                         <ul class="add-to-links">
@@ -87,7 +89,8 @@
                                     </div>
                                 </div>
                             </div>
-                             @endfor;
+                             @endforeach
+                             {{$data->links()}}
                            </div>
                        </div>
                 </div>

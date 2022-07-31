@@ -10,29 +10,13 @@
                 <h6>Danh Mục</h6>
             </div>
             <div class="main-cate">
+                @foreach ($dataCate as $item)
                 <div class="form-input align-items-center">
                     <input type="checkbox" id="sofas">
-                    <label for="sofas">Sofa</label>
+                    <label for="sofas">{{$item->name}}</label>
                 </div>
-
-                <div class="form-input align-items-center">
-                    <input type="checkbox">
-                    <label for="">Bàn Ăn</label>
-                </div>
-
-                <div class="form-input align-items-center">
-                    <input type="checkbox">
-                    <label for="">Tủ quần áo</label>
-                </div>
-
-                <div class="form-input align-items-center">
-                    <input type="checkbox">
-                    <label for="">Tủ giày</label>
-                </div>
-                <div class="form-input align-items-center">
-                    <input type="checkbox">
-                    <label for="">Thảm</label>
-                </div>
+                @endforeach
+               
             </div>
         </div>
         <div class="size">
@@ -40,22 +24,13 @@
                 <span class="fw-bold">Kích Thước</span>
             </div>
             <div class="main-size">
+                @foreach($dataSize as $item)
                 <div class="form-input align-items-center">
                     <input type="checkbox" id="sofas">
-                    <label for="sofas">Lớn</label>
-                </div>
-
-                <div class="form-input align-items-center">
-                    <input type="checkbox">
-                    <label for="">Vừa</label>
-                </div>
-
-                <div class="form-input align-items-center">
-                    <input type="checkbox">
-                    <label for="">Nhỏ</label>
-                </div>
-
-               
+                    <label for="sofas">{{$item->name}}</label>
+                </div>  
+                @endforeach
+              
             </div>
         </div>
         <div class="price-filter">

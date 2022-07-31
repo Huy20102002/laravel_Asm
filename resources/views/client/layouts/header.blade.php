@@ -152,7 +152,7 @@
                                     </div>
                                     <div class="main_cart">
                                         <div class="cart_your">
-                                            @for ($i = 0; $i < 40; $i++)
+                                            @for ($i = 0; $i < 1; $i++)
                                                 <div class="item-cart">
                                                     <div class="img-cart pr-3">
                                                         <img src="http://demo.snstheme.com/html/simen/images/products/13.jpg"

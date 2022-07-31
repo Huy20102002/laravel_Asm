@@ -27,7 +27,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.add');
+        $hide = 0;
+        $presently = 1;
+        return view('admin.categories.add',['hide'=>$hide,'presently'=>$presently]);
     }
 
     /**

@@ -21,5 +21,8 @@ class Product extends Model
     public function product_detail(){
         return $this->hasOne(Product_detail::class,'product_id','id');
     }
+    public function size(){
+        return $this->hasOne(Size::class,'id','size_id');
+    }
 
 }

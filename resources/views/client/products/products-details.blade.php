@@ -8,17 +8,24 @@
         <div class="content">
             <div class="products-details">
                 <div class="left-productsdetails">
-                    <img src="http://demo.snstheme.com/html/simen/images/products/13.jpg" alt="">
+                    <img src="{{asset($product->image)}}" alt="">
                 </div>
                 <div class="right-productsdetails">
                     <div class="name-product">
-                        <a href="">Modular Modern</a>
+                        <a href="">{{$product->name}}</a>
                     </div>
                     <div class="price-product">
                         <span>$ 540.00</span>
                     </div>
                     <div class="Availability">
-                        <span>Tình trạng: Còn hàng</span>
+                        <span>Tình trạng:
+                           @if($product->quantity < 1)
+                             <span class="text-danger">Hết hàng</span>
+                           @else
+                           <span>Còn hàng</span>
+                           @endif
+                           
+                        </span>
                     </div>
                     <div class="rating">
                         <form class="rating">
@@ -56,25 +63,30 @@
                     </div>
                     <div class="overview">
                         <span>Tổng quan:</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vel magna quis risus commodo
-                            porttitor. Praesent rutrum lectus diam, ac consequat dolor hendrerit sit amet. Nulla tincidunt
-                            tempor nulla et fermentum. Maecenas tempor massa sed sodales dignissim
+                        <p>{!!$product->overview!!}
                         </p>
                     </div>
-                    <div class="size">
+                     @if ($size !=null)
+                     <div class="size">
                         <div class="title-size">
                             <span>Size</span>
                             <span>*</span>
                         </div>
                         <div class="main-size">
+                          
+
                             <select name="" id="">
-                                <option value="">S</option>
-                                <option value="">M</option>
+                                @foreach($size as $index=> $item)
+                                <option value="{{$item}}">{{$items_size[$index]->name}}</option>
+                                @endforeach
+                                {{-- <option value="">S</option>
                                 <option value="">L</option>
-                                <option value="">XL</option>
+                                <option value="">XL</option> --}}
                             </select>
                         </div>
                     </div>
+                     @endif
+                    @if ($color !=null)
                     <div class="color">
                         <div class="title-color">
                             <span>Color</span>
@@ -82,26 +94,28 @@
                         </div>
                         <div class="main-size">
                             <select name="" id="">
-                                <option value="">White</option>
-                                <option value="">Black</option>
-                                <option value="">Yellow</option>
-                                <option value="">Green</option>
+                                @foreach($color as $index=> $item)
+                                <option value="{{$item}}">{{$items_color[$index]->name}}</option>
+                                @endforeach
+                        
                             </select>
                         </div>
                     </div>
+                    @endif
                     <div class="actions_details">
                         <div class="quantity">
                             <div class="title-quantity">
                                 Số Lượng:
                             </div>
                             <div class="input-quantity input-group">
-                                <button>-</button>
-                                <input type="text">
-                                <button>+</button>
+                                <button onclick="decreasingquantity()">-</button>
+                                <input type="text" value="1" id="quantityvalue">
+                                <button onclick="increasingquantity()">+</button>
+
                             </div>
                         </div>
                         <div class="AddCartDetails">
-                            <button class="btn-cartdetails">ADD TO CART</button>
+                            <button class="btn-cartdetails">THÊM VÀO GIỎ HÀNG</button>
                         </div>
                     </div>
                 </div>
@@ -149,9 +163,7 @@
                         </ul><!-- Tab panes -->
                         <div class="tab-content border">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum maiores similique hic
-                                    repellendus atque nihil architecto dolores quisquam consequuntur nostrum, nisi sapiente
-                                    animi quod non quia eum! Consequuntur, repellendus ducimus.</p>
+                                <p>{!!$product->description!!}</p>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <div class="form-comment">
@@ -280,6 +292,22 @@
     </div>
 @endsection
 @section('script')
+{{-- Add To Cart --}}
+<script  src="{{asset('js/order/addToCart.js')}}"></script>
+<script>
+    function increasingquantity(){
+           let quantityvalue = document.querySelector('#quantityvalue');
+           quantityvalue.value++;
+    }  
+    function decreasingquantity(){
+        let quantityvalue = document.querySelector('#quantityvalue');
+           quantityvalue.value--;
+           if(quantityvalue.value <= 0){
+           quantityvalue.value = 1;
+
+           }
+    }
+</script>
 <script>
             $(':radio').change(function() {
             console.log('New star rating: ' + this.value);

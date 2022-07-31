@@ -21,15 +21,24 @@ class CategoryRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+    // public function checkStatus(){
+   
+    //         return $this->input('status') == 0 || $this->input('status') !== 1;
+        
+    // }
     public function rules()
     {
+
         return [
-            'name'=>'required'
+            'name' => 'required',
+            'status' => 'required'
         ];
     }
-    public function messages(){
+    public function messages()
+    {
         return [
-            'name.required'=>'Vui lòng nhập tên danh mục'
+            'name.required' => 'Vui lòng nhập tên danh mục',
+            'status.required' => 'Vui lòng chọn trạng thái'
         ];
     }
 }

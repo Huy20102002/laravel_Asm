@@ -11,19 +11,20 @@
             </div>
             <div class="mb-3">
                 @if ($errors->has('name'))
-               <span class="text-danger"> {{ $errors->first('name') }}</span>
-            @endif
+                    <span class="text-danger"> {{ $errors->first('name') }}</span>
+                @endif
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Trạng thái</label>
                 <div class="mb-3">
                     <label for="">Hoạt động</label>
-                    <input type="radio" name="status" value="1" checked>
+                    <input type="radio" name="status" value="{{ $presently }}" checked>
                     <label for="">Không Hoạt động</label>
-                    <input type="radio" name="status" value="0">
+                    <input type="radio" name="status" value="{{ $hide }}">
                 </div>
-
-
+                @if ($errors->has('status'))
+                    <span class="text-danger"> {{ $errors->first('status') }}</span>
+                @endif
             </div>
             <div class="mb-3">
                 <button class="btn btn-primary">Lưu</button>

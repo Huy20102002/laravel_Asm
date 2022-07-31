@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
-
 class CartController extends Controller
 {
     /**
@@ -16,15 +16,6 @@ class CartController extends Controller
         return view('client.order.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -34,7 +25,8 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cart = new Cart();
+        
     }
 
     /**

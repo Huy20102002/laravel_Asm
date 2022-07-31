@@ -8,13 +8,14 @@
 }
 .left-productsdetails{
   border: 1px solid #eaeaea;
-  width: 800px;
 }
 .left-productsdetails img{
     max-width: 100%;
+    width: 28rem;
 }
 .right-productsdetails{
     margin-left: 30px;
+    max-width: 55rem;
 }
 .name-product a{
     font-size: 20px;

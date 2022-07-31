@@ -3,15 +3,28 @@
 @section('title_content', 'Danh Sách Sản Phẩm')
 @section('content')
     <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex align-items-center justify-content-between">
-            <div>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search Products....">
+        <div class="card-header py-3 ">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search Products....">
 
+                    </div>
+                </div>
+                <div>
+                    <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Thêm Sản Phẩm</a>
                 </div>
             </div>
-            <div>
-                <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Thêm Sản Phẩm</a>
+            <div class="mt-3">
+                @if (Session::has('success'))
+                    <div class="alert alert-success">
+                        {{ Session::get('success') }}
+                        @php
+                            Session::forget('success');
+                        @endphp
+                    </div>
+                @endif
+
             </div>
         </div>
         <div class="card-body">
@@ -46,12 +59,12 @@
                                 <td class="">
                                     <div class="d-flex">
                                         <div class="m-2">
-                                            <a href="{{route('admin.products.edit',$product->id)}}" class="btn btn-primary"
-                                                 ><i
-                                                    class="fas fa-info-circle"></i></a>
+                                            <a href="{{ route('admin.products.edit', $product->id) }}"
+                                                class="btn btn-primary"><i class="fas fa-info-circle"></i></a>
                                         </div>
                                         <div class="m-2">
-                                            <form action="{{ route('admin.products.delete', $product->id) }}" method="POST">
+                                            <form action="{{ route('admin.products.delete', $product->id) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -85,13 +98,13 @@
                         <div class="mb-3">
                             <label for="">Giá tiền</label>
                             <input type="text" value="" id="price" class="form-control">
-                          
+
                         </div>
                         <div class="mb-3">
                             <label for="">Hình ảnh</label>
                             <input type="file" value="" class="form-control">
                             <div class="mb-3">
-                                <img src="" id="image" width="150 "  alt="">
+                                <img src="" id="image" width="150 " alt="">
                             </div>
                         </div>
                         <div class="mb-3">
@@ -137,4 +150,3 @@
         </div>
     </div>
 @endsection
-
