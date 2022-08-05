@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollorController;
@@ -31,23 +32,28 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('products', [ProductController::class, 'index'])->name('products');
 Route::get('products/details/{id}', [ProductController::class, 'indexDetails'])->name('products-details');
 Route::get('lienhe', [ContactController::class, 'index'])->name('contact');
-
+// Cart
+Route::post('add_cart', [CartController::class, 'store'])->name('add-cart');
+Route::get('getcart', [CartController::class, 'showcart'])->name('getcart');
 // Auth
-Route::middleware('guest')->prefix('')->name('auth.')->group(function(){
+Route::middleware('guest')->prefix('auth')->name('auth.')->group(function () {
   Route::get('login', [LoginController::class, 'index'])->name('login');
-  Route::post('login-success',[LoginController::class,'login'])->name('login-success');
+  Route::post('login-success', [LoginController::class, 'login'])->name('login-success');
   Route::get('register', [RegisterController::class, 'index'])->name('register');
-  Route::post('register-success',[RegisterController::class,'register'])->name('register-success');
-  
+  Route::post('register-success', [RegisterController::class, 'register'])->name('register-success');
+  Route::get('/login-google', [AuthController::class, 'getLoginGoogle']);
+  Route::get('/google/callback', [AuthController::class, 'loginGoogleCallBack']);
+  Route::get('/login-facebook', [AuthController::class, 'getLoginFacebook']);
+  Route::get('/facebook/callback', [AuthController::class, 'loginFacebookCallBack']);
 });
 // Logout phải được tiến hành khi người dùng đã đăng nhập,nên middleware là auth
-Route::get('logout',[LoginController::class,'logout'])->middleware('auth')->name('logout');
+Route::get('logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
-Route::get('404',function(){
+Route::get('404', function () {
   return view('error.404');
 })->name('404');
 // Admin
-Route::middleware(['auth','authActive','authStatus'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'authActive', 'authStatus'])->prefix('admin')->name('admin.')->group(function () {
   Route::get('/', [DashboardController::class, 'index']);
   Route::prefix('users')->name('users.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
@@ -75,21 +81,20 @@ Route::middleware(['auth','authActive','authStatus'])->prefix('admin')->name('ad
     Route::put('/apiUpdate', [ProductController::class, 'apiUpdate'])->name('apiUpdate');
     Route::delete('delete/{id}', [ProductController::class, 'destroy'])->name('delete');
   });
-  Route::prefix('size')->name('size.')->group(function(){
-    Route::get('/',[SizeController::class,'index'])->name('index');
-    Route::get('add',[SizeController::class,'create'])->name('add');
-    Route::post('save-add',[SizeController::class,'store'])->name('save-add');
-    Route::get('edit/{id}',[SizeController::class,'edit'])->name('edit');
-    Route::put('update/{id}',[SizeController::class,'update'])->name('update');
-    Route::delete('delete/{id}',[SizeController::class,'destroy'])->name('destroy');
-
+  Route::prefix('size')->name('size.')->group(function () {
+    Route::get('/', [SizeController::class, 'index'])->name('index');
+    Route::get('add', [SizeController::class, 'create'])->name('add');
+    Route::post('save-add', [SizeController::class, 'store'])->name('save-add');
+    Route::get('edit/{id}', [SizeController::class, 'edit'])->name('edit');
+    Route::put('update/{id}', [SizeController::class, 'update'])->name('update');
+    Route::delete('delete/{id}', [SizeController::class, 'destroy'])->name('destroy');
   });
-  Route::prefix('color')->name('color.')->group(function(){
-    Route::get('/',[CollorController::class,'index'])->name('index');
-    Route::get('add',[CollorController::class,'create'])->name('add');
-    Route::post('save-add',[CollorController::class,'store'])->name('save-add');
-    Route::get('edit/{id}',[CollorController::class,'edit'])->name('edit');
-    Route::put('update/{id}',[CollorController::class,'update'])->name('update');
-    Route::delete('delete/{id}',[CollorController::class,'destroy'])->name('destroy');
+  Route::prefix('color')->name('color.')->group(function () {
+    Route::get('/', [CollorController::class, 'index'])->name('index');
+    Route::get('add', [CollorController::class, 'create'])->name('add');
+    Route::post('save-add', [CollorController::class, 'store'])->name('save-add');
+    Route::get('edit/{id}', [CollorController::class, 'edit'])->name('edit');
+    Route::put('update/{id}', [CollorController::class, 'update'])->name('update');
+    Route::delete('delete/{id}', [CollorController::class, 'destroy'])->name('destroy');
   });
 });

@@ -1,6 +1,8 @@
 @extends('client.layouts.layout')
 @section('title', 'Sản Phẩm Chi Tiết')
 @section('style')
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <link rel="stylesheet" href="{{ asset('css/products/products-details.css') }}">
 @endsection
 @section('content')
@@ -8,23 +10,23 @@
         <div class="content">
             <div class="products-details">
                 <div class="left-productsdetails">
-                    <img src="{{asset($product->image)}}" alt="">
+                    <img src="{{ asset($product->image) }}" alt="">
                 </div>
                 <div class="right-productsdetails">
                     <div class="name-product">
-                        <a href="">{{$product->name}}</a>
+                        <a href="">{{ $product->name }}</a>
                     </div>
                     <div class="price-product">
                         <span>$ 540.00</span>
                     </div>
                     <div class="Availability">
                         <span>Tình trạng:
-                           @if($product->quantity < 1)
-                             <span class="text-danger">Hết hàng</span>
-                           @else
-                           <span>Còn hàng</span>
-                           @endif
-                           
+                            @if ($product->quantity < 1)
+                                <span class="text-danger">Hết hàng</span>
+                            @else
+                                <span>Còn hàng</span>
+                            @endif
+
                         </span>
                     </div>
                     <div class="rating">
@@ -63,44 +65,41 @@
                     </div>
                     <div class="overview">
                         <span>Tổng quan:</span>
-                        <p>{!!$product->overview!!}
+                        <p>{!! $product->overview !!}
                         </p>
                     </div>
-                     @if ($size !=null)
-                     <div class="size">
-                        <div class="title-size">
-                            <span>Size</span>
-                            <span>*</span>
-                        </div>
-                        <div class="main-size">
-                          
+                    @if ($size != null)
+                        <div class="size">
+                            <div class="title-size">
+                                <span>Size</span>
+                                <span>*</span>
+                            </div>
+                            <div class="main-size">
 
-                            <select name="" id="">
-                                @foreach($size as $index=> $item)
-                                <option value="{{$item}}">{{$items_size[$index]->name}}</option>
-                                @endforeach
-                                {{-- <option value="">S</option>
-                                <option value="">L</option>
-                                <option value="">XL</option> --}}
-                            </select>
+
+                                <select name="size" id="size">
+                                    @foreach ($size as $index => $item)
+                                        <option value="{{ $item }}">{{ $items_size[$index]->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                     @endif
-                    @if ($color !=null)
-                    <div class="color">
-                        <div class="title-color">
-                            <span>Color</span>
-                            <span>*</span>
+                    @endif
+                    @if ($color != null)
+                        <div class="color">
+                            <div class="title-color">
+                                <span>Color</span>
+                                <span>*</span>
+                            </div>
+                            <div class="main-size">
+                                <select name="color" id="color">
+                                    @foreach ($color as $index => $item)
+                                        <option value="{{ $item }}">{{ $items_color[$index]->name }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
                         </div>
-                        <div class="main-size">
-                            <select name="" id="">
-                                @foreach($color as $index=> $item)
-                                <option value="{{$item}}">{{$items_color[$index]->name}}</option>
-                                @endforeach
-                        
-                            </select>
-                        </div>
-                    </div>
                     @endif
                     <div class="actions_details">
                         <div class="quantity">
@@ -114,8 +113,10 @@
 
                             </div>
                         </div>
+                    
                         <div class="AddCartDetails">
-                            <button class="btn-cartdetails">THÊM VÀO GIỎ HÀNG</button>
+                            <button onclick="addCart({{ $product,$product->product_details }})" class="btn-cartdetails">THÊM VÀO GIỎ
+                                HÀNG</button>
                         </div>
                     </div>
                 </div>
@@ -163,7 +164,7 @@
                         </ul><!-- Tab panes -->
                         <div class="tab-content border">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <p>{!!$product->description!!}</p>
+                                <p>{!! $product->description !!}</p>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <div class="form-comment">
@@ -292,24 +293,10 @@
     </div>
 @endsection
 @section('script')
-{{-- Add To Cart --}}
-<script  src="{{asset('js/order/addToCart.js')}}"></script>
-<script>
-    function increasingquantity(){
-           let quantityvalue = document.querySelector('#quantityvalue');
-           quantityvalue.value++;
-    }  
-    function decreasingquantity(){
-        let quantityvalue = document.querySelector('#quantityvalue');
-           quantityvalue.value--;
-           if(quantityvalue.value <= 0){
-           quantityvalue.value = 1;
-
-           }
-    }
-</script>
-<script>
-            $(':radio').change(function() {
+    {{-- Add To Cart --}}
+    <script src="{{ asset('js/order/Cart.js') }}"></script>
+    <script>
+        $(':radio').change(function() {
             console.log('New star rating: ' + this.value);
         });
         $('#comment-products').autoResize();
@@ -323,10 +310,8 @@
 
 
         });
-</script>
+    </script>
     <script>
-
-
         $(document).ready(function() {
             $('.products_content').slick({
                 slidesToShow: 5,
@@ -356,5 +341,5 @@
 
         });
     </script>
- 
+
 @endsection

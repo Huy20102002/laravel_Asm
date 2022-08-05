@@ -1,3 +1,4 @@
+
 <header>
     <?php $Auth = Auth::user()?>
     <div class="header-top bg-dark">
@@ -139,7 +140,7 @@
                             </div>
                         </div>
                         <div class="block_cart mx-3 d-flex align-items-center">
-                            <i class="fal fa-shopping-cart  " id="shopping_cart"></i>
+                            <i onclick="getCart()" class="fal fa-shopping-cart  " id="shopping_cart"></i>
                             <div class="cart_quantity">
                                 <span class="text-danger fs-6 "> 3</span>
                                 <span class="text-dark fs-6  ">(items)</span>
@@ -151,26 +152,8 @@
                                         <i id="close_cart" class="fal fa-times"></i>
                                     </div>
                                     <div class="main_cart">
-                                        <div class="cart_your">
-                                            @for ($i = 0; $i < 1; $i++)
-                                                <div class="item-cart">
-                                                    <div class="img-cart pr-3">
-                                                        <img src="http://demo.snstheme.com/html/simen/images/products/13.jpg"
-                                                            width="100" alt="">
-                                                    </div>
-                                                    <div class="title-cart">
-                                                        <div class="title-cart-head">
-                                                            <p>Modular Modern </p>
-                                                            <div class="quantity-cart">
-                                                                <span> <i class="fal fa-times"></i> 1</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="price-cart">
-                                                            <p>500 $</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endfor
+                                        <div class="cart_your" id="cart_your">
+                                          
                                         </div>
                                         <div class="add-CartClient">
                                             <form action="{{route('cart')}}" method="POST">

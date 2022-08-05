@@ -25,6 +25,7 @@
         </div>
     </div>
     @include('client.layouts.script')
+    <script src="{{ asset('js/order/Cart.js') }}"></script>
 
     <script>
         $(document).ready(function() {
