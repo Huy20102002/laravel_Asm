@@ -64,8 +64,13 @@
                                 </div>
                                 <div class="action-bot">
                                     <div class="wrap-addTocart">
-                                        <button class=" btn-cart" title="Add To Cart">Thêm Vào Giỏ Hàng</button>
-                                    </div>
+                                        <a href="{{route('products-details',$item->id)}}" class="text-white">
+                                        <button class=" btn-cart" title="Add To Cart">
+                                                Chi Tiết
+                                            </button>
+                                        </a>
+
+                                        </div>
                                     <div class="actions">
                                         <ul class="add-to-links">
                                             <li>

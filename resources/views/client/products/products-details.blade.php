@@ -1,7 +1,7 @@
 @extends('client.layouts.layout')
 @section('title', 'Sản Phẩm Chi Tiết')
 @section('style')
-<meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <link rel="stylesheet" href="{{ asset('css/products/products-details.css') }}">
 @endsection
@@ -113,9 +113,10 @@
 
                             </div>
                         </div>
-                    
+
                         <div class="AddCartDetails">
-                            <button onclick="addCart({{ $product,$product->product_details }})" class="btn-cartdetails">THÊM VÀO GIỎ
+                            <button onclick="addCart({{ $product, $product->product_details }})" class="btn-cartdetails">THÊM
+                                VÀO GIỎ
                                 HÀNG</button>
                         </div>
                     </div>
@@ -203,12 +204,25 @@
                                         </form>
                                     </div>
                                     <div class="form-comment m-3">
-                                        <textarea id="comment-products" rows="3" placeholder="Viết gì đó..."></textarea>
-                                        <div class="form-comment-post">
-                                            <a href="#" class="post-comment">Bình luận</a>
-                                        </div>
+                                        @php
+                                            $Auth = Auth::user();
+                                        @endphp
+                                        @if (Auth::user())
+                                            <form action="{{ route('addComment') }}" method="post">
+                                                @csrf
+
+                                                <input type="hidden" name="id_user" value="{{ $Auth->id }}">
+                                                <input type="hidden" name="id_product" value="{{ $product->id }}">
+                                                <textarea name="content" id="comment-products" rows="3" placeholder="Viết gì đó..."></textarea>
+                                                <div class="form-comment-post">
+                                                    <button class="post-comment">Bình luận</button>
+                                                </div>
+                                            </form>
+                                        @else
+                                            Vui lòng đăng nhập để bình luận ! Xin cảm ơn
+                                        @endif
                                         <div class="list-comment">
-                                            @for ($i = 0; $i < 10; $i++)
+                                            @foreach ($comment as $cm)
                                                 <div class="profile-comment">
                                                     <div class="img-profile">
                                                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt_NZykul07nU3cliFuRZQr4_q-gOdkRTmRA&usqp=CAU"
@@ -216,12 +230,12 @@
                                                     </div>
                                                     <div class="text-comment">
                                                         <div class="name-profile">
-                                                            Admin
+                                                            {{ $cm->user->name }}
                                                         </div>
-                                                        <p>Sản phẩm ok</p>
+                                                        <p class="text-xs">{{ $cm->content }}</p>
                                                     </div>
                                                 </div>
-                                            @endfor
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -233,22 +247,23 @@
                         <div class="title-related mt-3">
                             <h6 class="">Sản phẩm liên quan</h6>
                         </div>
+
                         <div class="products_content product_related_slick">
-                            @for ($i = 0; $i <= 7; $i++)
+                            @foreach ($related_product as $related)
                                 <div class="products_grid">
                                     <div class="ico-label">
                                         <span class="ico-product ico-new">New</span>
                                         <span class="ico-product ico-sale">Sale</span>
                                     </div>
-                                    <div class="products_img">
-                                        <a href="{{ route('products-details', $i) }}">
-                                            <img src="http://demo.snstheme.com/html/simen/images/products/1.jpg"
-                                                alt="">
-                                        </a>
-                                    </div>
+                                    <a href="{{ route('products-details', $related->id) }}">
+                                        <div class="products_img">
+
+                                            <img src="{{ asset($related->image) }}" alt="">
+                                        </div>
+                                    </a>
                                     <div class="products_text">
                                         <div class="item-title">
-                                            <a href="">Modular Modern</a>
+                                            <a href="">{{ $related->name }}</a>
                                         </div>
                                         <div class="item-price">
                                             <div class="price-box">
@@ -259,7 +274,7 @@
                                     </div>
                                     <div class="action-bot">
                                         <div class="wrap-addTocart">
-                                            <button class=" btn-cart" title="Add To Cart">Add To Cart</button>
+                                            <button class=" btn-cart" title="Add To Cart">Chi Tiết Sản Phẩm</button>
                                         </div>
                                         <div class="actions">
                                             <ul class="add-to-links">
@@ -284,7 +299,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endfor
+                            @endforeach
                         </div>
                     </div>
                 </div>

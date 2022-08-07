@@ -24,5 +24,8 @@ class Product extends Model
     public function size(){
         return $this->hasOne(Size::class,'id','size_id');
     }
+    public function comment(){
+        return $this->hasMany(Comment::class,'id_product','id');
+    }
 
 }

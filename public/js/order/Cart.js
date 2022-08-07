@@ -10,12 +10,10 @@ const addCart = async (data, data_detail) => {
 
    let size = document.querySelector('#size') == undefined ? 0 : document.querySelector('#size').value;
    let color = document.querySelector('#color') == undefined ? 0 : document.querySelector('#color').value;
-   console.log(size);
-   console.log(color);
+ 
    try {
       await config.post('add_cart', {
          'id_product': data.id,
-         'id_user': 0,
          'image': data.image,
          'id_size': size,
          'id_color': color ,

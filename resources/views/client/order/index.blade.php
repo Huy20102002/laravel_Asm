@@ -18,65 +18,59 @@
                     <label class="product-removal">Xóa</label>
                     <label class="product-line-price">Tổng</label>
                 </div>
-
-                <div class="product">
-                    <div class="product-image">
-                        <img src="http://demo.snstheme.com/html/simen/images/products/1.jpg">
+                @php
+                $total = 0;
+            @endphp
+                @foreach ($cart as $cars)
+                    <div class="product">
+                        <div class="product-image">
+                            <img src="{{ asset($cars['image']) }}">
+                        </div>
+                        <div class="product-details">
+                            <div class="product-title">{{ $cars['product_name'] }}</div>
+                            <p class="product-description">The best dog bones of all time. Holy crap. Your dog will be
+                                begging
+                                for these things! I got curious once and ate one myself. I'm a fan.</p>
+                        </div>
+                      
+                        <div class="product-price">{{ $cars['price'] }}</div>
+                        @php
+                            $sum = $cars['price'] * $cars['quantity'];
+                            $total+=$sum;
+                        @endphp
+                        <div class="product-quantity">
+                            <input type="number" value="{{ $cars['quantity'] }}" min="1">
+                        </div>
+                        <div class="product-removal">
+                            <button class="remove-product">
+                                Xóa
+                            </button>
+                        </div>
+                        <div class="product-line-price">{{ $cars['price'] * $cars['quantity'] }}</div>
                     </div>
-                    <div class="product-details">
-                        <div class="product-title">Dingo Dog Bones</div>
-                        <p class="product-description">The best dog bones of all time. Holy crap. Your dog will be begging
-                            for these things! I got curious once and ate one myself. I'm a fan.</p>
-                    </div>
-                    <div class="product-price">12.99</div>
-                    <div class="product-quantity">
-                        <input type="number" value="2" min="1">
-                    </div>
-                    <div class="product-removal">
-                        <button class="remove-product">
-                            Xóa
-                        </button>
-                    </div>
-                    <div class="product-line-price">25.98</div>
-                </div>
-
-                <div class="product">
-                    <div class="product-image">
-                        <img src="http://demo.snstheme.com/html/simen/images/products/1.jpg">
-                    </div>
-                    <div class="product-details">
-                        <div class="product-title">Nutro™ Adult Lamb and Rice Dog Food</div>
-                        <p class="product-description">Who doesn't like lamb and rice? We've all hit the halal cart at 3am
-                            while quasi-blackout after a night of binge drinking in Manhattan. Now it's your dog's turn!</p>
-                    </div>
-                    <div class="product-price">45.99</div>
-                    <div class="product-quantity">
-                        <input type="number" value="1" min="1">
-                    </div>
-                    <div class="product-removal">
-                        <button class="remove-product">
-                            Xóa
-                        </button>
-                    </div>
-                    <div class="product-line-price">45.99</div>
-                </div>
-
+                @endforeach
                 <div class="totals">
                     <div class="totals-item">
                         <label>Tạm tính</label>
-                        <div class="totals-value" id="cart-subtotal">71.97</div>
+                        <div class="totals-value" id="cart-subtotal">{{ $total }}</div>
                     </div>
                     <div class="totals-item">
                         <label>Thuế (5%)</label>
-                        <div class="totals-value" id="cart-tax">3.60</div>
+                        @php
+                           $fax =  5*$total /100;
+                        @endphp
+                        <div class="totals-value" id="cart-tax">{{$fax}}</div>
                     </div>
                     <div class="totals-item">
                         <label>Tiền ship</label>
                         <div class="totals-value" id="cart-shipping">15.00</div>
                     </div>
+                    @php
+                    $total_price = $fax + $total;
+                    @endphp
                     <div class="totals-item totals-item-total">
                         <label>Tổng tiền</label>
-                        <div class="totals-value" id="cart-total">90.57</div>
+                        <div class="totals-value" id="cart-total">{{$total_price}}</div>
                     </div>
                 </div>
 

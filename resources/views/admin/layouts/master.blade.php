@@ -176,8 +176,8 @@
                 <div id="collapsePages6" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Danh Sách:</h6>
-                        <a class="collapse-item" href="{{route('admin.size.index')}}">Danh Sách Bình luận</a>
-                        <a class="collapse-item" href="{{route('admin.color.add')}}">Thống kê sản phẩm</a>                       
+                        <a class="collapse-item" href="{{route('admin.statis.comment')}}">Thống kê Bình luận</a>
+                        <a class="collapse-item" href="{{route('admin.statis.order')}}">Thống kê hàng bán</a>                       
                     </div>
                 </div>
             </li>

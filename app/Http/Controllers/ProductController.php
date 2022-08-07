@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Comment;
 use App\Models\Product;
 use App\Models\Product_detail;
 use App\Models\Size;
@@ -40,8 +41,9 @@ class ProductController extends Controller
         $product_detail = Product_detail::where('product_id', $product->id)->first();
         $size = json_decode($product->product_detail->size_id);
         $color = json_decode($product->product_detail->color_id);
-
-        if($size != null){
+        $comment = Comment::where('id_product',$id)->with('User')->get();
+        $related_product = Product::where('category_id',$product->category_id)->get();
+            if($size != null){
             foreach ($size as $value) {
                 $items_size[] = Size::find($value);
             }
@@ -53,6 +55,8 @@ class ProductController extends Controller
         }
         return view('client.products.products-details', [
             'product' => $product,
+            'comment'=>$comment,
+            'related_product'=>$related_product,
             'size' => $size, 'items_size' => $items_size, 'color' => $color, 'items_color' => $items_color
         ]);
     }
@@ -84,7 +88,7 @@ class ProductController extends Controller
             );
         }
         if ($request->sale == 1) {
-            $price_sale = $request->price * (100 - $request->discount) / 100;
+            $price_sale = $request->price *  $request->discount / 100;
         } else {
             $price_sale = 0;
         }

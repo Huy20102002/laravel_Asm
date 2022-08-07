@@ -17,10 +17,11 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    protected $cart = array();
     public function index()
     {
-        return view('client.order.index');
+        $this->cart = Session::get('cart');
+        return view('client.order.index', ['cart' =>  $this->cart]);
     }
 
 
@@ -33,12 +34,14 @@ class CartController extends Controller
     public function store(Request $request)
     {
 
-        $userId = auth()->user()->id;
         $product = Product::find($request->id_product);
         $id_color = null;
         $id_size = null;
         $name_size = null;
         $name_color = null;
+        $i_array = null;
+        dd($request);
+        $quantity = $request->quantity;
         if ($request->id_color != null) {
             $color = Color::find($request->id_color);
             $id_color = $color->id;
@@ -49,10 +52,8 @@ class CartController extends Controller
             $id_size = $size->id;
             $name_size = $size->name;
         }
-        $cart = array();
-        if (!Session::get('cart')) {
-            $cart[] = [
-                'userId' => $userId,
+     
+            $this->cart[] = [
                 'product_id' => $product->id,
                 'product_name' => $product->name,
                 'color' => $name_color,
@@ -64,57 +65,72 @@ class CartController extends Controller
                 'image' => $request->image
             ];
 
-            Session::put('cart', $cart);
-        } else {
+            Session::put('cart', $this->cart);
+        } 
 
-            // $cart = Session::get('cart')['product_id'];
-            $cart = Session::get('cart');
-            for ($i = 0; $i < count($cart); $i++) {
-                if ($cart[$i]['product_id'] == $request->id_product && ($cart[$i]['color_id'] == $id_color && $cart[$i]['size_id'] == $id_size)) {
-                    $cart[$i]['quantity'] += +$request->quantity;
-                    session::put('cart', $cart);
-                    // dd($cart);
-                }
-                if ($cart[$i]['product_id'] == $request->id_product && ($cart[$i]['color_id'] != $id_color || $cart[$i]['size_id'] != $id_size)) {
-                    $cart_properties = [
-                        'userId' => $userId,
-                        'product_id' => $product->id,
-                        'product_name' => $product->name,
-                        'color' => $name_color,
-                        'color_id' => $id_color,
-                        'size' => $name_size,
-                        'size_id' => $id_size,
-                        'price' => $request->price,
-                        'quantity' => $request->quantity,
-                        'image' => $request->image
-                    ];
-                    array_push($cart, $cart_properties);
-                    session::put('cart', $cart);
+    // public function showa()
+    // {
+    //     if (!Session::get('cart')) {
+    //         $this->cart[] = [
+    //             'product_id' => $product->id,
+    //             'product_name' => $product->name,
+    //             'color' => $name_color,
+    //             'color_id' => $id_color,
+    //             'size' => $name_size,
+    //             'size_id' => $id_size,
+    //             'price' => $request->price,
+    //             'quantity' => $request->quantity,
+    //             'image' => $request->image
+    //         ];
 
-                }
-            }
-            // Check product_id exist in $cart
-            $key = array_search($request->id_product, array_column($cart, 'product_id'));
-        
-            if ($cart[$key]['product_id'] != $request->id_product) {
-                $newcart = [
-                    'userId' => $userId,
-                    'product_id' => $product->id,
-                    'product_name' => $product->name,
-                    'color' => $name_color,
-                    'color_id' => $id_color,
-                    'size' => $name_size,
-                    'size_id' => $id_size,
-                    'price' => $request->price,
-                    'quantity' => $request->quantity,
-                    'image' => $request->image
-                ];
-                array_push($cart, $newcart);
-            }
-            Session::put('cart', $cart);
+    //         Session::put('cart', $this->cart);
+    //     } else {
+    //         $this->cart = Session::get('cart');
 
-        }
-    }
+    //         $size = array_search($request->id_color, array_column($this->cart, 'size_id'));
+    //         $color = array_search($request->id_color, array_column($this->cart, 'color_id'));
+    //         $key = array_search($request->id_product, array_column($this->cart, 'product_id'));
+    //         if ($this->cart[$key]['product_id'] == $request->id_product) {
+    //             for ($i = 0; $i < count($this->cart); $i++) {
+    //                 if ($this->cart[$i]['product_id'] == $request->id_product && $this->cart[$i]['color_id'] == $id_color && $this->cart[$i]['size_id'] == $id_size) {
+    //                     $this->cart[$i]['quantity'] += +$request->quantity;
+    //                     Session::put('cart', $this->cart);
+    //                 }
+    //             }
+    //         }
+    //         if ($this->cart[$key]['product_id'] != $request->id_product) {
+    //             $newcarts = [
+    //                 'product_id' => $product->id,
+    //                 'product_name' => $product->name,
+    //                 'color' => $name_color,
+    //                 'color_id' => $id_color,
+    //                 'size' => $name_size,
+    //                 'size_id' => $id_size,
+    //                 'price' => $request->price,
+    //                 'quantity' => $request->quantity,
+    //                 'image' => $request->image
+    //             ];
+    //             array_push($this->cart, $newcarts);
+    //             Session::put('cart', $this->cart);
+    //         }
+    //         if ($this->cart[$key]['product_id'] == $request->id_product) {
+    //             if ($this->cart[$key]['color_id'] != $id_color || $this->cart[$key]['size_id'] != $id_size) {
+    //                 $cart[] = [
+    //                     'product_id' => $product->id,
+    //                     'product_name' => $product->name,
+    //                     'color' => $name_color,
+    //                     'color_id' => $id_color,
+    //                     'size' => $name_size,
+    //                     'size_id' => $id_size,
+    //                     'price' => $request->price,
+    //                     'quantity' => $request->quantity,
+    //                     'image' => $request->image
+    //                 ];
+    //                 Session::put('cart', array_push($this->cart, $cart));
+    //             }
+    //         }
+    //     }
+    // }
     public function showcart()
     {
         $userId = auth()->user()->id;
@@ -128,9 +144,8 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function cartDetail()
     {
-        //
     }
 
     /**

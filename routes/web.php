@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollorController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\StatisticalController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
@@ -32,9 +34,10 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('products', [ProductController::class, 'index'])->name('products');
 Route::get('products/details/{id}', [ProductController::class, 'indexDetails'])->name('products-details');
 Route::get('lienhe', [ContactController::class, 'index'])->name('contact');
+Route::post('/add-comment',[CommentController::class,'store'])->name('addComment');
 // Cart
 Route::post('add_cart', [CartController::class, 'store'])->name('add-cart');
-Route::get('getcart', [CartController::class, 'showcart'])->name('getcart');
+Route::middleware(['auth', 'authActive'])->get('getcart', [CartController::class, 'showcart'])->name('getcart');
 // Auth
 Route::middleware('guest')->prefix('auth')->name('auth.')->group(function () {
   Route::get('login', [LoginController::class, 'index'])->name('login');
@@ -96,5 +99,13 @@ Route::middleware(['auth', 'authActive', 'authStatus'])->prefix('admin')->name('
     Route::get('edit/{id}', [CollorController::class, 'edit'])->name('edit');
     Route::put('update/{id}', [CollorController::class, 'update'])->name('update');
     Route::delete('delete/{id}', [CollorController::class, 'destroy'])->name('destroy');
+  });
+  Route::prefix('statistical')->name('statis.')->group(function(){
+    Route::get('/',[StatisticalController::class,'index'])->name('index');
+
+    Route::get('/comment',[StatisticalController::class,'comment'])->name('comment');
+    Route::get('/comment/product/{id}',[StatisticalController::class,'comment_detail'])->name('comment_details');
+    Route::delete('/comment/delete/{id}',[StatisticalController::class,'destroyComment'])->name('comment_delete');
+    Route::get('/order',[StatisticalController::class,'order'])->name('order');
   });
 });
