@@ -15,6 +15,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
+        // \Illuminate\Session\Middleware\StartSession::class,
         \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
@@ -55,6 +56,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+        'checkCart'=>\App\Http\Middleware\CheckCart::class,
         'authStatus'=>\App\Http\Middleware\LoginRequestCheckStatus::class,
         'authActive'=> \App\http\Middleware\CheckloginUserStatus::class,
         'auth' => \App\Http\Middleware\Authenticate::class,

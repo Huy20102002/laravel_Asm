@@ -30,36 +30,56 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Đăng ký tài khoản mới!</h1>
                             </div>
-                            <form class="user" action="{{route('auth.register-success')}}" method="POST">
+                            <form class="user" action="{{ route('auth.register-success') }}" method="POST">
                                 @csrf
                                 <div class="form-group ">
 
-                                    <input type="text" class="form-control form-control-user" name="name" id="exampleLastName"
-                                        placeholder="Họ Tên....">
+                                    <input type="text" class="form-control form-control-user" name="name"
+                                        id="exampleLastName" placeholder="Họ Tên....">
                                 </div>
+                                @if ($errors->has('name'))
+                                   <span class="text-danger">
+                                    {{ $errors->first('name') }}
+                                   </span>
+                                @endif
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Địa chỉ email....">
+                                    <input type="email" name="email" class="form-control form-control-user"
+                                        id="exampleInputEmail" placeholder="Địa chỉ email....">
                                 </div>
+                                @if ($errors->has('email'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('email') }}
+                                    </span>
+                                @endif
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" name="password" class="form-control form-control-user"
                                             id="exampleInputPassword" placeholder="Mật khẩu">
-                                    </div>
+                                            @if ($errors->has('password'))
+                                            <span class="text-danger">
+                                                {{ $errors->first('password') }}
+                                            </span>
+                                        @endif
+                                        </div>
+                                    
                                     <div class="col-sm-6">
                                         <input type="password" name="repassword" class="form-control form-control-user"
                                             id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu">
-                                    </div>
+                                            @if ($errors->has('repassword'))
+                                            <span class="text-danger">
+                                               {{ $errors->first('repassword') }}
+                                            </span>
+                                       @endif
+                                        </div>
+                                  
                                 </div>
+                               
                                 <button class="btn btn-primary btn-user btn-block">
                                     Đăng ký tài khoản
                                 </button>
                                 <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i>Đăng ký với google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Đăng ký với Facebook
+                                <a href="/auth/login-google" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Login with Google
                                 </a>
                             </form>
                             <hr>

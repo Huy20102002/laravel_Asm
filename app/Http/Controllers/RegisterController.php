@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class RegisterController extends Controller
     {
         return view('client.users.register');
     }
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
 
         User::create([
@@ -29,7 +30,7 @@ class RegisterController extends Controller
             'role'=>1  
         ]);
 
-        return redirect()->route('login');
+        return redirect()->route('auth.login');
     }
     /**
      * Show the form for creating a new resource.

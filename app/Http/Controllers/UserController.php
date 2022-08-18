@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -16,9 +17,9 @@ class UserController extends Controller
     public function index()
     {
         // Alert::success('Success Title', 'Success Message');
-        $list_user =  User::select('id','name', 'age', 'email', 'phone', 'image')
-        ->paginate(15);
-        return view('admin.users.index',['data'=>$list_user]);
+        $list_user =  User::select('id', 'name', 'age', 'email', 'phone', 'image', 'role', 'status','birtday')
+            ->paginate(15);
+        return view('admin.users.index', ['data' => $list_user]);
     }
 
     /**
@@ -37,9 +38,26 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->age = $request->age;
+        $user->phone=  $request->phone;
+        if ($request->hasFile('image')) {
+            $user->image = $request->image = $this->saveFile(
+                $request->image,
+                $request->name,
+                'image/user'
+            );
+        }
+        $user->status = $request->status;
+        $user->role = $request->role;
+        $user->birtday = $request->birtday;
+        $user->save();
+        return redirect()->route('admin.users.index');
+
     }
 
     /**
@@ -51,7 +69,9 @@ class UserController extends Controller
     public function show($id)
     {
         $data = User::find($id);
-        return  response()->json(['data'=>$data]);
+        // $data->birtday = ;
+
+        return  response()->json(['data' => $data]);
     }
 
     /**
@@ -62,7 +82,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('admin.users.edit', ['user' => $user]);
     }
 
     /**
@@ -72,26 +93,58 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->age = $request->age;
+        $user->phone=  $request->phone;
+        if ($request->hasFile('image')) {
+            $user->image = $request->image = $this->saveFile(
+                $request->image,
+                $request->name,
+                'image/user'
+            );
+        }
+        if($user->role == 2){
+            $user->status = 1;
+            $user->role = 2;
+            $user->birtday = $request->birtday;
+        }else{
+            $user->status = $request->status;
+            $user->role = $request->role;
+            $user->birtday = $request->birtday;
+        }
+      
+        $user->save();
+        return redirect()->route('admin.users.index');
     }
-
+    public function saveFile($file, $prefixName = '', $folder = 'public')
+    {
+        $fileName = $file->hashName();
+        $fileName = $prefixName ? $prefixName . '_' . $fileName : $fileName;
+        return $file->storeAs($folder, $fileName);
+    }
+   
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        alert()->question('Title','Lorem Lorem Lorem');
-        if($id){
+
+        if ($id) {
             $user = User::find($id);
-            if($user->delete()){
+            if ($user->role == 2) {
                 return redirect()->back();
             }
+            $user->status = $request->status;
+            $user->save();
+            return redirect()->back();
+
         }
     }
-
 }

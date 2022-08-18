@@ -11,9 +11,7 @@
 
                 </div>
             </div>
-            <div>
-                <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Thêm người dùng</a>
-            </div>
+         
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -22,10 +20,11 @@
                         <tr>
                             <th>Stt</th>
                             <th>Name</th>
-                            <th>Age</th>
+                            <th>birtday</th>
                             <th>Email</th>
                             <th>Phone Number</th>
                             <th>Image</th>
+                            <th>Status</th>
                             <th class="col-2">Orther</th>
                         </tr>
                     </thead>
@@ -34,27 +33,44 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->age }}</td>
+                                <td>{{ $user->birtday }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->phone }}</td>
-                                <td>{{ $user->image }}</td>
+                                <td>
+                                    <img src="{{ asset($user->image) }}" width="100" alt="">
+                                </td>
+                                <td>
+                                    @if ($user->status == 1)
+                                        Hoạt động
+                                    @else
+                                        Tạm khóa
+                                    @endif
+                                </td>
                                 <td class="">
+
                                     <div class="d-flex">
                                         <div class="m-2">
-                                            <button onclick="getId('{{ $user->id }}')" class="btn btn-primary"
-                                                data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                                    class="fas fa-info-circle"></i></button>
+                                            <a class="btn btn-primary" href="{{ route('admin.users.show', $user->id) }}"><i
+                                                    class="fas fa-info-circle"></i></a>
                                         </div>
-                                        <div class="m-2">
-                                            <form action="{{route('admin.users.delete',$user->id)}}" method="POST">
-                                                @csrf
-                                                @method("DELETE")
-                                                <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                            </form>
-                                        </div>
+                                        @if ($user->role != 2)
+                                            <div class="m-2">
+                                                <form action="{{ route('admin.users.delete', $user->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    @if($user->status ==0)
+                                                    <input type="hidden" value="1" name="status">
+                                                    <button class="btn btn-danger"><i class="fas fa-lock"></i></button>
+                                                    @else
+                                                    <input type="hidden" value="0" name="status">
+                                                    <button class="btn btn-danger"><i class="fas fa-lock-open"></i></button>
+                                                    @endif
+                                                </form>
+                                            </div>
                                     </div>
-                                </td>
-                            </tr>
+                        @endif
+                        </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -64,7 +80,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="2" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -72,58 +88,17 @@
                     <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                 </div>
                 <div class="modal-body">
-                    <div class="form">
-                        <form action="" id="formUser">
+                    <div class="form" id="formUser">
 
-                          
-
-                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Lưu thay đổi</button>
                 </div>
             </div>
         </div>
     </div>
 @endsection
 @section('script')
-    <script>
-        function getRequest(url) {
-            return fetch(url, {
-                    method: "GET",
-                    headers: new Headers({
-                        "Content-Type": "application/json"
-                    })
-                })
-                .then(response => response.json());
-        }
-        const getId = async (id) => {
-            const url = `http://localhost:8000/admin/users/show/${id}`;
-            const {data} = await getRequest(url);
-            document.getElementById("formUser").innerHTML = ` <div class="mb-3">
-                                  <label for="">Tên người dùng</label>
-                                  <input type="text" value="${data.name}" class="form-control">
-                              </div>
-                              <div class="mb-3">
-                                  <label for="">Tuổi</label>
-                                  <input type="text" value="${data.age}" class="form-control">
-                              </div>
-                              <div class="mb-3">
-                                  <label for="">Email</label>
-                                  <input type="email" value="${data.email}" class="form-control">
-                              </div>
-                              <div class="mb-3">
-                                  <label for="">Phone number</label>
-                                  <input type="text" value="${data.phone}" class="form-control">
-                              </div>
-                              <div class="mb-3">
-                                  <label for="">Image</label>
-                                  <input type="file" class="form-control">
-                              </div>`;
 
-        };
-          
-    </script>
 @endsection

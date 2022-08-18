@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Comment;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -30,7 +32,10 @@ class StatisticalController extends Controller
     }
     public function order()
     {
-        return view('admin.stacials.order');
+            $cart = Cart::join('products','carts.id_product','=','products.id')
+            
+          ->select('carts.id_product','carts.quantity as cartquantity')->groupBy('carts.id_product','carts.quantity')->get();
+                        return view('admin.stacials.order',['cart'=>$cart]);
     }
     public function destroyComment($id)
     {

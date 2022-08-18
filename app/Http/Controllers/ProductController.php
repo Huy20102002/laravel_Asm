@@ -20,13 +20,25 @@ class ProductController extends Controller
             ->paginate(10);
         return view('admin.product.index', ['data' => $all]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        $all = Product::select('*')->with(['category'])
-            ->with('product_detail')
-            ->paginate(20);
+        if($request->ajax()){
+            $all = Product::where('category_id','like',"%$request->category_id%")->select('*')
+            ->with(['category'])
+                ->with(['product_detail'])
+                ->paginate(20);
+        }else{
+            $all = Product::select('*')
+            ->with(['category'])
+                ->with(['product_detail'])
+                ->paginate(20);
+        }
+  
         $allCate = Category::select('name', 'id')->get();
         $Size = Size::select('name', 'id')->get();
+        if($request->ajax()){
+            return response()->json($all);
+        }
         return view('client.products.index', ['data' => $all, 'dataCate' => $allCate, 'dataSize' => $Size]);
     }
     public function indexDetails($id)
@@ -41,9 +53,12 @@ class ProductController extends Controller
         $product_detail = Product_detail::where('product_id', $product->id)->first();
         $size = json_decode($product->product_detail->size_id);
         $color = json_decode($product->product_detail->color_id);
-        $comment = Comment::where('id_product',$id)->with('User')->get();
-        $related_product = Product::where('category_id',$product->category_id)->get();
-            if($size != null){
+        $comment = Comment::where('id_product', $id)->with('User')->get();
+        $related_product = Product::where('category_id', $product->category_id)->get();
+        $view_product = Product::find($id);
+        $view_product->view += 1;
+        $view_product->save();
+        if ($size != null) {
             foreach ($size as $value) {
                 $items_size[] = Size::find($value);
             }
@@ -55,8 +70,8 @@ class ProductController extends Controller
         }
         return view('client.products.products-details', [
             'product' => $product,
-            'comment'=>$comment,
-            'related_product'=>$related_product,
+            'comment' => $comment,
+            'related_product' => $related_product,
             'size' => $size, 'items_size' => $items_size, 'color' => $color, 'items_color' => $items_color
         ]);
     }
@@ -144,7 +159,7 @@ class ProductController extends Controller
 
         ]);
     }
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         $product = Product::find($id);
         $data_detail = $product->product_detail;
@@ -174,7 +189,16 @@ class ProductController extends Controller
         $product_detail->save();
         return redirect()->route('admin.products.index')->with('success', 'Cập nhật sản phẩm thành công');
     }
-
+    public function Search(){
+        $allCate = Category::select('name', 'id')->get();
+        $Size = Size::select('name', 'id')->get();
+        $keyword = isset($_GET['keyword']) ? $_GET['keyword']:'';
+        $result = Product::select('*')
+        ->where('name','like',"%$keyword%")
+        ->orderBy('created_at', 'desc')
+        ->paginate(20);
+       return view('client.products.search',['data'=>$result, 'dataCate' => $allCate, 'dataSize' => $Size]);
+    }
     private function saveFile($file, $prefixName = '', $folder = 'public')
     {
         $fileName = $file->hashName();

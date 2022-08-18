@@ -1,5 +1,5 @@
 @extends('client.layouts.layout')
-@section('title', 'Sản Phẩm')
+@section('title', 'Tìm kiếm sản phẩm')
 @section('style')
 <link rel="stylesheet" href="{{asset('css/products/index.css')}}">
 <link rel="stylesheet" href="{{asset('css/filter/index.css')}}">

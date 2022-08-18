@@ -7,7 +7,13 @@
     <div class="container">
         <div class="content mt-4 mb-4">
             <h3>Giỏ Hàng</h3>
-
+            <div class="mb-3">
+                <form action="{{ route('delete-cart-all') }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-sm btn-primary">Xóa tất cả</button>
+                </form>
+            </div>
             <div class="shopping-cart">
 
                 <div class="column-labels">
@@ -19,34 +25,46 @@
                     <label class="product-line-price">Tổng</label>
                 </div>
                 @php
-                $total = 0;
-            @endphp
-                @foreach ($cart as $cars)
+                    $total = 0;
+                @endphp
+                @foreach ($cartData as $cart)
                     <div class="product">
                         <div class="product-image">
-                            <img src="{{ asset($cars['image']) }}">
+                            <img src="{{ asset($cart['image']) }}">
                         </div>
                         <div class="product-details">
-                            <div class="product-title">{{ $cars['product_name'] }}</div>
-                            <p class="product-description">The best dog bones of all time. Holy crap. Your dog will be
-                                begging
-                                for these things! I got curious once and ate one myself. I'm a fan.</p>
+                            <div class="product-title">{{ $cart['product_name'] }}</div>
+                            <p class="product-description">
+                            <p> Kích thước: {{ $cart['size'] }}</p>
+                            <p> Màu sắc: {{ $cart['color'] }}</p>
+                            </p>
                         </div>
-                      
-                        <div class="product-price">{{ $cars['price'] }}</div>
+
+                        <div class="product-price">{{ $cart['price'] }}</div>
                         @php
-                            $sum = $cars['price'] * $cars['quantity'];
-                            $total+=$sum;
+                            $sum = $cart['price'] * $cart['quantity'];
+                            $total += $sum;
                         @endphp
                         <div class="product-quantity">
-                            <input type="number" value="{{ $cars['quantity'] }}" min="1">
+                            <form action="{{route('updateQuantity')}}" method="post">
+                                @csrf
+                                <input type="number" value="{{ $cart['quantity'] }}" name="quantity" min="1">
+                                <input type="hidden" name="id_product" value="{{ $cart['product_id'] }}">
+                                <input type="hidden" name="id_color" value="{{$cart['color_id']}}">
+                                <input type="hidden" name="id_size"value="{{$cart['size_id']}}" >
+                                <input type="hidden" name="product_name" value="{{$cart['product_name']}}">
+                                <button class="btn btn-sm btn-primary">Cập nhập</button>
+                            </form>
+
                         </div>
                         <div class="product-removal">
-                            <button class="remove-product">
+                            <button
+                                onclick="removeCart('{{ $cart['product_id'] }}','{{ $cart['color_id'] }}','{{ $cart['size_id'] }}','{{ $cart['product_name'] }}')"
+                                class="remove-product">
                                 Xóa
                             </button>
                         </div>
-                        <div class="product-line-price">{{ $cars['price'] * $cars['quantity'] }}</div>
+                        <div class="product-line-price">{{ $cart['price'] * $cart['quantity'] }}</div>
                     </div>
                 @endforeach
                 <div class="totals">
@@ -54,33 +72,18 @@
                         <label>Tạm tính</label>
                         <div class="totals-value" id="cart-subtotal">{{ $total }}</div>
                     </div>
-                    <div class="totals-item">
-                        <label>Thuế (5%)</label>
-                        @php
-                           $fax =  5*$total /100;
-                        @endphp
-                        <div class="totals-value" id="cart-tax">{{$fax}}</div>
-                    </div>
-                    <div class="totals-item">
-                        <label>Tiền ship</label>
-                        <div class="totals-value" id="cart-shipping">15.00</div>
-                    </div>
-                    @php
-                    $total_price = $fax + $total;
-                    @endphp
-                    <div class="totals-item totals-item-total">
-                        <label>Tổng tiền</label>
-                        <div class="totals-value" id="cart-total">{{$total_price}}</div>
-                    </div>
+                  
+                   
                 </div>
 
-                <button class="checkout">Thanh Toán</button>
+                <a href="{{ route('checkout') }}" class="checkout">Thanh Toán</a>
 
             </div>
         </div>
     </div>
 @endsection
 @section('script')
+    <script src="{{ asset('js/order/Cart.js') }}"></script>
     <script>
         /* Set rates + misc */
         var taxRate = 0.05;
@@ -145,16 +148,25 @@
                 });
             });
         }
-
+        const removeCart = async (id_product, id_size, id_color, product_name) => {
+            let data_product = {
+                id_product,
+                id_size,
+                id_color,
+                product_name
+            }
+            await config.post('delete_cart', data_product);
+        }
+        // const 
 
         /* Remove item from cart */
-        function removeItem(removeButton) {
+        const removeItem = async (removeButton) => {
             /* Remove row from DOM and recalc cart total */
             var productRow = $(removeButton).parent().parent();
             productRow.slideUp(fadeTime, function() {
                 productRow.remove();
                 recalculateCart();
             });
-        }
+        };
     </script>
 @endsection

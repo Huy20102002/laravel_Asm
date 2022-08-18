@@ -12,8 +12,8 @@
             <div class="main-cate">
                 @foreach ($dataCate as $item)
                 <div class="form-input align-items-center">
-                    <input type="checkbox" id="sofas">
-                    <label for="sofas">{{$item->name}}</label>
+                    <input type="checkbox" value="{{$item->id}}" id="filter{{$item->name}}" class="filtercheckbox">
+                    <label for="filter{{$item->name}}">{{$item->name}}</label>
                 </div>
                 @endforeach
                

@@ -17,7 +17,8 @@
                                 <h5>Liên Hệ Với Chúng Tôi</h5>
                             </div>
                             <div class="form">
-                                <form action="">
+                                <form action="{{route('contact-store')}}" method="POST">
+                                    @csrf
                                     <div class="mb-3">
                                         <label for="">Họ Và Tên</label>
                                         <input type="text" class="form-control" name="name">
@@ -29,7 +30,7 @@
                                  
                                     <div class="mb-3">
                                         <label for="">Lời Nhắn</label>
-                                       <textarea name="" class="form-control" id="" cols="20" rows="5"></textarea>
+                                       <textarea name="content" class="form-control" id="" cols="20" rows="5"></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <button class="btn btn-primary">Gửi</button>

@@ -17,7 +17,7 @@
                         <a href="">{{ $product->name }}</a>
                     </div>
                     <div class="price-product">
-                        <span>$ 540.00</span>
+                        <span>{{number_format($product->price)}} VNĐ</span>
                     </div>
                     <div class="Availability">
                         <span>Tình trạng:
@@ -115,6 +115,7 @@
                         </div>
 
                         <div class="AddCartDetails">
+                           
                             <button onclick="addCart({{ $product, $product->product_details }})" class="btn-cartdetails">THÊM
                                 VÀO GIỎ
                                 HÀNG</button>
@@ -229,8 +230,25 @@
                                                             class="rounded-circle" alt="" width="50">
                                                     </div>
                                                     <div class="text-comment">
-                                                        <div class="name-profile">
-                                                            {{ $cm->user->name }}
+                                                        <div class="name-profile d-flex">
+                                                                {{ $cm->user->name }}
+                                                                <span class="fw-light">
+                                                                    {{$cm->user->created_at}}
+                                                                </span>
+                                                                <p class="m-3">
+                                                                    <form action="{{route('removeComment',$cm->id)}}" method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        @php 
+                                                                       $user=Auth::user()
+                                                                        @endphp
+                                                                        @if ($user)
+                                                                         @if($user->id == $cm->user->id)
+                                                                         <button class="btn btn-sm btn-primary">Xóa</button>
+                                                                         @endif
+                                                                        @endif
+                                                                    </form>
+                                                                </p>
                                                         </div>
                                                         <p class="text-xs">{{ $cm->content }}</p>
                                                     </div>

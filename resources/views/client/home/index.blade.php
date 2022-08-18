@@ -39,40 +39,39 @@
             <div class="head_content">
                 <ul class="nav-category">
                     <li class="latest" role="presentation">
-                        <a href="">Latest</a>
+                        <a href="">Sản phẩm mới nhất</a>
                     </li>
-                    <li class="saleoff">
-                        <a href="" role="presentation">Sale Off</a>
-                    </li>
-                    <li>
-                        <a href="" role="presentation">Best Sale</a>
-                    </li>
+                    
                 </ul>
             </div>
             <div class="main_products">
                 <div class="products_content">
-                    <div class="products_grid">
+                      @foreach($newproduct as $item)
+                      <div class="products_grid">
                         <div class="ico-label">
-                            <span class="ico-product ico-new">New</span>
+                            @if ($item->sale ==1)
                             <span class="ico-product ico-sale">Sale</span>
+                            @endif
                         </div>
+                       <a href="{{route('products-details',$item->id)}}">
                         <div class="products_img">
-                            <img src="http://demo.snstheme.com/html/simen/images/products/1.jpg" alt="">
+                            <img src="{{asset($item->image)}}" alt="">
                         </div>
+                       </a>
                         <div class="products_text">
                             <div class="item-title">
-                                <a href="">Modular Modern</a>
+                                <a href="{{route('products-details',$item->id)}}">{{$item->name}}</a>
                             </div>
                             <div class="item-price">
                                 <div class="price-box">
-                                    <span class="price1">$ 540.00</span>
-                                    <span class="price2">$ 600.00</span>
+                                    <span class="price1">{{$item->sale == 1 ? number_format($item->product_detail->price_sale) : number_format($item->price)}}</span>
+                                    <span class="price2">{{$item->sale == 1 ? number_format($item->price) : '' }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="action-bot">
                             <div class="wrap-addTocart">
-                                <button class=" btn-cart" title="Add To Cart">Add To Cart</button>
+                               <a href="{{route('products-details',$item->id)}}"> <button class=" btn-cart" title="Add To Cart">Chi Tiết</button></a>
                             </div>
                             <div class="actions">
                                 <ul class="add-to-links">
@@ -97,139 +96,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="products_grid">
-                        <div class="products_img">
-                            <img src="http://demo.snstheme.com/html/simen/images/products/1.jpg" alt="">
-                        </div>
-                        <div class="products_text">
-                            <div class="item-title">
-                                <a href="">Modular Modern</a>
-                            </div>
-                            <div class="item-price">
-                                <div class="price-box">
-                                    <span class="price1">$ 540.00</span>
-                                    <span class="price2">$ 600.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="action-bot">
-                            <div class="wrap-addTocart">
-                                <button class=" btn-cart" title="Add To Cart">Add To Cart</button>
-                            </div>
-                            <div class="actions">
-                                <ul class="add-to-links">
-                                    <li>
-                                        <a class="link-wishlist" href="#" title="Add to Wishlist">
-                                            <i class="fa fa-heart"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="link-compare" href="#" title="Add to Compare">
-                                            <i class="fa fa-random"></i>
-                                        </a>
-                                    </li>
-                                    <li class="wrap-quickview" data-id="qv_item_7">
-                                        <div class="quickview-wrap">
-                                            <a class="sns-btn-quickview qv_btn" href="#">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="products_grid">
-                        <div class="products_img">
-                            <img src="http://demo.snstheme.com/html/simen/images/products/1.jpg" alt="">
-                        </div>
-                        <div class="products_text">
-                            <div class="item-title">
-                                <a href="">Modular Modern</a>
-                            </div>
-                            <div class="item-price">
-                                <div class="price-box">
-                                    <span class="price1">$ 540.00</span>
-                                    <span class="price2">$ 600.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="action-bot">
-                            <div class="wrap-addTocart">
-                                <button class=" btn-cart" title="Add To Cart">Add To Cart</button>
-                            </div>
-                            <div class="actions">
-                                <ul class="add-to-links">
-                                    <li>
-                                        <a class="link-wishlist" href="#" title="Add to Wishlist">
-                                            <i class="fa fa-heart"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="link-compare" href="#" title="Add to Compare">
-                                            <i class="fa fa-random"></i>
-                                        </a>
-                                    </li>
-                                    <li class="wrap-quickview" data-id="qv_item_7">
-                                        <div class="quickview-wrap">
-                                            <a class="sns-btn-quickview qv_btn" href="#">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="products_grid">
-                        <div class="products_img">
-                            <img src="http://demo.snstheme.com/html/simen/images/products/1.jpg" alt="">
-                        </div>
-                        <div class="products_text">
-                            <div class="item-title">
-                                <a href="">Modular Modern</a>
-                            </div>
-                            <div class="item-price">
-                                <div class="price-box">
-                                    <span class="price1">$ 540.00</span>
-                                    <span class="price2">$ 600.00</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="products_grid">
-
-                        <div class="products_img">
-                            <img src="http://demo.snstheme.com/html/simen/images/products/1.jpg" alt="">
-                        </div>
-                        <div class="products_text">
-                            <div class="item-title">
-                                <a href="">Modular Modern</a>
-                            </div>
-                            <div class="item-price">
-                                <div class="price-box">
-                                    <span class="price1">$ 540.00</span>
-                                    <span class="price2">$ 600.00</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="products_grid">
-                        <div class="products_img">
-                            <img src="http://demo.snstheme.com/html/simen/images/products/1.jpg" alt="">
-                        </div>
-                        <div class="products_text">
-                            <div class="item-title">
-                                <a href="">Modular Modern</a>
-                            </div>
-                            <div class="item-price">
-                                <div class="price-box">
-                                    <span class="price1">$ 540.00</span>
-                                    <span class="price2">$ 600.00</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  
+                      @endforeach
                 </div>
                 <div class="suggest_collection">
                     <div class="title_collection">
@@ -238,26 +106,32 @@
                     <div class="office-chair">
                         <div class="main_off_chair">
                             <div class=" products_content_slick">
-                                @for($i=0;$i<10;$i++)
-                                <div class="products_grid m-1">
-                                    <div class="products_img">
-                                        <img src="http://demo.snstheme.com/html/simen/images/products/1.jpg"
-                                            alt="">
+                                @foreach($suggestProduct as $item)
+                                <div class="products_grid">
+                                    <div class="ico-label">
+                                        @if ($item->sale ==1)
+                                        <span class="ico-product ico-sale">Sale</span>
+                                        @endif
                                     </div>
+                                    <a href="{{route('products-details',$item->id)}}">
+                                        <div class="products_img">
+                                            <img src="{{asset($item->image)}}" alt="">
+                                        </div>
+                                    </a>
                                     <div class="products_text">
                                         <div class="item-title">
-                                            <a href="">Modular Modern</a>
+                                            <a href="">{{$item->name}}</a>
                                         </div>
                                         <div class="item-price">
                                             <div class="price-box">
-                                                <span class="price1">$ 540.00</span>
-                                                <span class="price2">$ 600.00</span>
+                                                <span class="price1">{{$item->sale == 1 ? number_format($item->product_detail->price_sale) : number_format($item->price)}}</span>
+                                                <span class="price2">{{$item->sale == 1 ? number_format($item->price) : '' }}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="action-bot">
                                         <div class="wrap-addTocart">
-                                            <button class=" btn-cart" title="Add To Cart">Add To Cart</button>
+                                            <button class=" btn-cart" title="Add To Cart">Chi Tiết</button>
                                         </div>
                                         <div class="actions">
                                             <ul class="add-to-links">
@@ -282,7 +156,7 @@
                                         </div>
                                     </div>
                                 </div>
-                               @endfor
+                               @endforeach
                             </div>
                         </div>
                         <div class="banner_chair">

@@ -53,7 +53,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{route('admin.')}}">
+                <a class="nav-link" href="{{route('admin.index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Trang chủ</span></a>
             </li>
@@ -74,7 +74,7 @@
                 <div id="collapsePages4" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Danh Sách:</h6>
-                        <a class="collapse-item" href="{{route('admin.size.index')}}">Danh Sách Đơn Hàng</a>
+                        <a class="collapse-item" href="{{route('admin.listOrder')}}">Danh Sách Đơn Hàng</a>
                     </div>
                 </div>
             </li>
@@ -89,7 +89,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Danh Sách:</h6>
                         <a class="collapse-item" href="{{ route('admin.users.index') }}">Thông tin user</a>
-                        <a class="collapse-item" href="{{ route('admin.users.create') }}">Thêm người dùng</a>
                     </div>
                 </div>
             </li>

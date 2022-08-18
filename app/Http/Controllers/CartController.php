@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
+use App\Mail\SendMail;
 use App\Models\Cart;
 use App\Models\Color;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Size;
 use Illuminate\Http\Request;
 use Darryldecode\Cart\CartServiceProvider;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
 {
@@ -20,8 +25,8 @@ class CartController extends Controller
     protected $cart = array();
     public function index()
     {
-        $this->cart = Session::get('cart');
-        return view('client.order.index', ['cart' =>  $this->cart]);
+        $cartData = Session::get('cart');
+        return view('client.order.index', compact('cartData'));
     }
 
 
@@ -39,9 +44,8 @@ class CartController extends Controller
         $id_size = null;
         $name_size = null;
         $name_color = null;
-        $i_array = null;
-        dd($request);
-        $quantity = $request->quantity;
+        $this->cart = Session::get('cart');
+
         if ($request->id_color != null) {
             $color = Color::find($request->id_color);
             $id_color = $color->id;
@@ -52,8 +56,8 @@ class CartController extends Controller
             $id_size = $size->id;
             $name_size = $size->name;
         }
-     
-            $this->cart[] = [
+        if (!Session::get('cart')) {
+            $this->cart[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]  = array(
                 'product_id' => $product->id,
                 'product_name' => $product->name,
                 'color' => $name_color,
@@ -63,80 +67,189 @@ class CartController extends Controller
                 'price' => $request->price,
                 'quantity' => $request->quantity,
                 'image' => $request->image
-            ];
-
+            );
             Session::put('cart', $this->cart);
-        } 
+        } else {
 
-    // public function showa()
-    // {
-    //     if (!Session::get('cart')) {
-    //         $this->cart[] = [
-    //             'product_id' => $product->id,
-    //             'product_name' => $product->name,
-    //             'color' => $name_color,
-    //             'color_id' => $id_color,
-    //             'size' => $name_size,
-    //             'size_id' => $id_size,
-    //             'price' => $request->price,
-    //             'quantity' => $request->quantity,
-    //             'image' => $request->image
-    //         ];
+            $item = Session::get('cart');
+            $idCart = isset($item[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['product_id']) ? $item[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['product_id'] : '';
+            if ($idCart != $product->id) {
+                $this->cart[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]  = array(
+                    'product_id' => $product->id,
+                    'product_name' => $product->name,
+                    'color' => $name_color,
+                    'color_id' => $id_color,
+                    'size' => $name_size,
+                    'size_id' => $id_size,
+                    'price' => $request->price,
+                    'quantity' => $request->quantity,
+                    'image' => $request->image
+                );
+                Session::put('cart', $this->cart);
+            }
+            if ($idCart == $product->id && $item[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['color_id'] == $request->id_color &&  $item[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['size_id'] == $request->id_size) {
+                $item[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['quantity'] += +$request->quantity;
+                Session::put('cart', $item);
+            }
+            if ($idCart == $product->id && $item[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['color_id'] != $request->id_color ||  $item[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['size_id'] != $request->id_size) {
+                $newcart[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]  = array(
+                    'product_id' => $product->id,
+                    'product_name' => $product->name,
+                    'color' => $name_color,
+                    'color_id' => $id_color,
+                    'size' => $name_size,
+                    'size_id' => $id_size,
+                    'price' => $request->price,
+                    'quantity' => $request->quantity,
+                    'image' => $request->image
+                );
+                Session::put('cart', $newcart);
+            }
+        }
+    }
 
-    //         Session::put('cart', $this->cart);
-    //     } else {
-    //         $this->cart = Session::get('cart');
-
-    //         $size = array_search($request->id_color, array_column($this->cart, 'size_id'));
-    //         $color = array_search($request->id_color, array_column($this->cart, 'color_id'));
-    //         $key = array_search($request->id_product, array_column($this->cart, 'product_id'));
-    //         if ($this->cart[$key]['product_id'] == $request->id_product) {
-    //             for ($i = 0; $i < count($this->cart); $i++) {
-    //                 if ($this->cart[$i]['product_id'] == $request->id_product && $this->cart[$i]['color_id'] == $id_color && $this->cart[$i]['size_id'] == $id_size) {
-    //                     $this->cart[$i]['quantity'] += +$request->quantity;
-    //                     Session::put('cart', $this->cart);
-    //                 }
-    //             }
-    //         }
-    //         if ($this->cart[$key]['product_id'] != $request->id_product) {
-    //             $newcarts = [
-    //                 'product_id' => $product->id,
-    //                 'product_name' => $product->name,
-    //                 'color' => $name_color,
-    //                 'color_id' => $id_color,
-    //                 'size' => $name_size,
-    //                 'size_id' => $id_size,
-    //                 'price' => $request->price,
-    //                 'quantity' => $request->quantity,
-    //                 'image' => $request->image
-    //             ];
-    //             array_push($this->cart, $newcarts);
-    //             Session::put('cart', $this->cart);
-    //         }
-    //         if ($this->cart[$key]['product_id'] == $request->id_product) {
-    //             if ($this->cart[$key]['color_id'] != $id_color || $this->cart[$key]['size_id'] != $id_size) {
-    //                 $cart[] = [
-    //                     'product_id' => $product->id,
-    //                     'product_name' => $product->name,
-    //                     'color' => $name_color,
-    //                     'color_id' => $id_color,
-    //                     'size' => $name_size,
-    //                     'size_id' => $id_size,
-    //                     'price' => $request->price,
-    //                     'quantity' => $request->quantity,
-    //                     'image' => $request->image
-    //                 ];
-    //                 Session::put('cart', array_push($this->cart, $cart));
-    //             }
-    //         }
-    //     }
-    // }
     public function showcart()
     {
-        $userId = auth()->user()->id;
 
         $value = Session::get('cart');
         return response()->json($value);
+    }
+    public function checkout()
+    {
+        return view('client.order.checkout');
+    }
+    public function save_checkout(OrderRequest $request)
+    {
+        $order = new Order();
+
+        // Order
+        $order->name = $request->name;
+        $order->email = $request->email;
+        $order->address = $request->address;
+        $order->country = $request->country;
+        $order->district = $request->district;
+        $order->zipcode = $request->zipcode;
+        $order->total = $request->total;
+        $order->phone = $request->phone;
+        $order->status = 0;
+        $order->save();
+
+        // Cart 
+
+        $carts = session::get('cart');
+
+        foreach ($carts as $item) {
+            $cart = new Cart();
+            $Product = Product::where('id', $item['product_id'])->first();
+            $cart->id_order = $order->id;
+            $cart->id_product = $item['product_id'];
+            $cart->id_size = $item['size_id'] ? $item['size_id'] : 0;
+            $cart->id_color = $item['color_id'] ? $item['color_id'] : 0;
+            $cart->quantity = $item['quantity'];
+            $cart->price = $item['price'];
+            $Product->quantity = $Product->quantity - $request->quantity;
+            $Product->save();
+            // $product->quantity = $newquantity;
+            // $product->save();
+
+            $cart->save();
+        }
+        // ;
+        return redirect()->route('order-success');
+    }
+    public function order_success()
+    {
+        return view('client.order.success');
+    }
+    public function increasingQuantity(Request $request)
+    {
+        $product = Product::find($request->id_product);
+        $id_color = null;
+        $id_size = null;
+        $name_size = null;
+        $name_color = null;
+        $this->cart = Session::get('cart');
+
+        if ($request->id_color != null) {
+            $color = Color::find($request->id_color);
+            $id_color = $color->id;
+            $name_color = $color->name;
+        }
+        if ($request->id_size != null) {
+            $size = Size::find($request->id_size);
+            $id_size = $size->id;
+            $name_size = $size->name;
+        }
+        $cart = Session::get('cart');
+        $idCart = isset($item[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['product_id']) ? $item[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['product_id'] : '';
+        if ($idCart == $product->id && $cart[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['color_id'] == $request->id_color &&  $cart[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['size_id'] == $request->id_size) {
+            $cart[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['quantity'] += +$request->quantity;
+            Session::put('cart', $cart);
+        }
+        return response()->json(200);
+    }
+    public function updateQuantity(Request $request)
+    {
+        $product = Product::find($request->id_product);
+        $id_color = null;
+        $id_size = null;
+        $name_size = null;
+        $name_color = null;
+
+        if ($request->id_color != null) {
+            $color = Color::find($request->id_color);
+            $id_color = $color->id;
+            $name_color = $color->name;
+        }
+        if ($request->id_size != null) {
+            $size = Size::find($request->id_size);
+            $id_size = $size->id;
+            $name_size = $size->name;
+        }
+        $cart = Session::get('cart');
+        $idCart = isset($item[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['product_id']) ? $item[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['product_id'] : '';
+
+        $cart[$product->id . $id_color . $id_size . str_replace(' ', '', $product->name)]['quantity'] = $request->quantity;
+        Session::put('cart', $cart);
+        // dd($cart);
+        return redirect()->back();
+    }
+    public function updateStatus(Request $request, $id)
+    {
+        $order = Order::find($id);
+        $content = '';
+        if ($request->status1 == 1) {
+            $order->status = $request->status1;
+            $content = 'Đơn hàng của bạn đã được xác nhận';
+        }
+        if ($request->status2 == 2) {
+            $order->status = $request->status2;
+            $content = 'Đơn hàng của bạn đã được giao cho đơn vị vận chuyển';
+        }
+        if ($request->status3 == 3) {
+            $order->status = $request->status3;
+            $content = 'Đơn hàng của bạn đã được giao thành công';
+        }
+        $to_email = $request->email;
+        $data = [
+            'subject' => "Xin chào $request->name Cảm ơn bạn đã đặt hàng của chúng tôi !",
+            'name' => $request->name,
+            'email' => $request->email,
+            'content' => $content,
+            'address' => $request->address
+        ];
+        Mail::to($to_email)->send(new SendMail($data));
+
+        $order->save();
+        return redirect()->back();
+    }
+    public function cancelOrder(Request $request, $id)
+    {
+        $order = Order::find($id);
+        $order->status = $request->status4;
+
+        $order->save();
+        return redirect()->back();
     }
     /**
      * Display the specified resource.
@@ -144,41 +257,29 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function cartDetail()
+    // public function i\
+    public function listOrder()
     {
+        $dataOrder = Order::select('*')->orderBy("orders.created_at",'desc')->paginate(10);
+        return view('admin.order.list', ['dataOrder' => $dataOrder]);
+    }
+    public function orderDetail($id)
+    {
+        $dataDetail = Order::where('id', $id)->with('Cart')->first();
+        $cart = Cart::where('id_order', $id)->with('product')->get();
+        return view('admin.order.order_detail', ['dataDetail' => $dataDetail, 'cart' => $cart]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function delete(Request $request)
     {
-        //
+        // str_replace(' ', '', $product->name)
+        $cart = Session::get('cart');
+        unset($cart[$request->id_product . $request->id_size . $request->id_color . str_replace(' ', '', $request->product_name)]);
+        Session::put('cart', $cart);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function deleteAll(Request $request)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        Session::forget('cart');
+        return redirect()->back();
     }
 }

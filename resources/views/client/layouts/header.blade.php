@@ -6,7 +6,7 @@
             <div class="customer-ct p-0 navbar navbar-expand-lg d-flex justify-content-end">
                 <ul class="ul-top navbar-nav  mr-auto  ">
                     <li class="first nav-item ">
-                        <a href="" class=" nav-link top-link-account text-light">
+                        <a  href="{{route('profile')}}" class=" nav-link top-link-account text-light">
                             <i class="fas fa-user"></i> 
                           @if ($Auth)
                               {{$Auth->name}}
@@ -17,7 +17,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link top-link-wishlist text-light">
+                        <a class="nav-link top-link-wishlist text-light">
                             <i class="far fa-heart"></i> My wishlist
                         </a>
                     </li>
@@ -135,8 +135,10 @@
                             <span id="search_toggle"><i class="fal fa-search"></i>
                             </span>
                             <div class="block_search" id="block_search">
-                                <input type="text" placeholder="Nhập từ khóa cần tìm kiếm....." name=""
-                                    id="input_search">
+                               <form action="{{route('productssearch')}}" method="get">
+                                <input type="text" placeholder="Nhập từ khóa cần tìm kiếm....." name="keyword"
+                                id="input_search">
+                               </form>
                             </div>
                         </div>
                         <div class="block_cart mx-3 d-flex align-items-center">
